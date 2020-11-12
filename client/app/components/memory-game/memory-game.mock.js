@@ -16,8 +16,8 @@ const images = [
     url: 'https://images.unsplash.com/photo-1501706362039-c06b2d715385?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=535&q=80',
   },
   {
-    name: 'birds',
-    url: 'https://images.unsplash.com/photo-1593473568361-97d48cbdc5c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
+    name: 'sunflower',
+    url: 'https://images.unsplash.com/photo-1603973684108-e712f8652a39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
   },
   {
     name: 'thailand',

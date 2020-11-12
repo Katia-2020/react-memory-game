@@ -1,0 +1,24 @@
+.grid {
+  align-items: center;
+  display: flex;
+
+  &--column {
+    flex-direction: column;
+  }
+
+  &--row {
+    flex-direction: row;
+  }
+
+  &--justify-center {
+    justify-content: center;
+  }
+
+  &--gutters-small {
+    margin-left: -15px;
+
+    >* {
+      padding-left: 15px;
+    }
+  }
+}

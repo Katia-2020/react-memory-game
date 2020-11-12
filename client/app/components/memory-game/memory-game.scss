@@ -1,7 +1,12 @@
 .memory-game {
   max-width: 600px;
-  height: 600px;
   border: 2px solid rgb(0, 0, 0);
   margin: auto;
   padding: 20px;
+
+  &__item {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+  }
 }

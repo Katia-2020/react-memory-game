@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Column } from '../grid';
 import Card from '../card';
-import
+import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
 class MemoryGame extends React.Component {
@@ -17,9 +17,20 @@ class MemoryGame extends React.Component {
     return (
       <div className={styles['memory-game']}>
         <Row>
-          <Column>
-            <Card />
-          </Column>
+          {images.map((item) => (
+            <>
+              <Column>
+                <div className={styles['memory-game__item']}>
+                  <Card image={item.image} />
+                </div>
+              </Column>
+              <Column>
+                <div className={styles['memory-game__item']}>
+                  <Card image={item.image} />
+                </div>
+              </Column>
+            </>
+          ))}
         </Row>
       </div>
     );w

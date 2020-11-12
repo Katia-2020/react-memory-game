@@ -1,9 +1,9 @@
 import React from 'react';
-
+import MemoryGame from './components/memory-game';
 import './reset.scss';
 
 const App = () => (
-  <div />
+  <MemoryGame />
 );
 
 export default App;

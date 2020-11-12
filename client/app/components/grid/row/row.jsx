@@ -6,7 +6,12 @@ import styles from './row.scss';
 const cx = classnames.bind(styles);
 
 const Row = (props) => {
-  const { direction, children, center, gutters } = props;
+  const {
+    direction,
+    children,
+    center,
+    gutters,
+  } = props;
 
   return (
     <div

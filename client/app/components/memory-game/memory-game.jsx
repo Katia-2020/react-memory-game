@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Column } from '../grid';
-import Cart from '../cart';
+import Card from '../card';
+import
 import styles from './memory-game.scss';
 
 class MemoryGame extends React.Component {
@@ -17,11 +18,11 @@ class MemoryGame extends React.Component {
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            <Cart />
+            <Card />
           </Column>
         </Row>
       </div>
-    );
+    );w
   }
 }
 

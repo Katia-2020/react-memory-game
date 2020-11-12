@@ -10,6 +10,8 @@ class MemoryGame extends React.Component {
 
     this.state = {
       currentCard: '',
+      currentId: 0,
+      previousId: 0,
       previousCard: '',
       isClicked: false,
     };
@@ -17,13 +19,14 @@ class MemoryGame extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(name) {
-    const { isClicked, currentCard, previousCard } = this.state;
+  handleClick(name, id) {
+    const { currentCard, currentId } = this.state;
     let newState;
 
     if (currentCard === '') {
       newState = {
         currentCard: name,
+        currentId: id,
         isClicked: true,
       };
     }
@@ -31,6 +34,8 @@ class MemoryGame extends React.Component {
     if (currentCard !== '') {
       newState = {
         currentCard: name,
+        currentId: id,
+        previousId: currentId,
         previousCard: currentCard,
         isClicked: true,
       };
@@ -48,7 +53,7 @@ class MemoryGame extends React.Component {
   render() {
     console.log(this.state);
 
-    const { isClicked } = this.state;
+    const { currentId, previousId } = this.state;
     const sameCard = this.isSameCard();
 
     return (
@@ -58,12 +63,22 @@ class MemoryGame extends React.Component {
             <>
               <Column>
                 <div className={styles['memory-game__item']}>
-                  <Card image={sameCard && item.url} name={item.name} onClick={this.handleClick} />
+                  <Card
+                    image={(currentId === item.id) && item.url}
+                    name={item.name}
+                    id={item.id}
+                    onClick={this.handleClick}
+                  />
                 </div>
               </Column>
               <Column>
                 <div className={styles['memory-game__item']}>
-                  <Card image={sameCard && item.url} name={item.name} onClick={this.handleClick} />
+                  <Card
+                    image={((currentId === item.id || previousId === item.id) && sameCard) && item.url}
+                    name={item.name}
+                    id={item.id + images.length}
+                    onClick={this.handleClick}
+                  />
                 </div>
               </Column>
             </>

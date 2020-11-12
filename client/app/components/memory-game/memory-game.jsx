@@ -31,14 +31,19 @@ class MemoryGame extends React.Component {
   }
 
   handleClick(name, id) {
-    const { currentCard, previousCard, foundImages, isClicked } = this.state;
+    const {
+      currentCard,
+      previousCard,
+      foundImages,
+      isClicked,
+    } = this.state;
     let newState;
 
     if (!currentCard.name) {
       newState = {
         currentCard: {
-          name,
           id,
+          name,
         },
         isClicked: !isClicked,
       };
@@ -115,7 +120,7 @@ class MemoryGame extends React.Component {
                     name={item.name}
                     onClick={this.handleClick}
                   >
-                    {(currentCard.id === (item.id + images.length)) ? (
+                    {(currentCard.id === (item.id + images.length) && previousCard.name) ? (
                       <Image url={item.url} />
                       ) : (
                         <Icon />

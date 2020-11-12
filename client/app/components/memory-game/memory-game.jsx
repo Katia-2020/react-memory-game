@@ -33,7 +33,7 @@ class MemoryGame extends React.Component {
           ))}
         </Row>
       </div>
-    );w
+    );
   }
 }
 

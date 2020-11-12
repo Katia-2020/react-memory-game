@@ -1,0 +1,11 @@
+.icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  svg {
+    fill: rgb(255, 154, 147);
+    width: 50px;
+  }
+}

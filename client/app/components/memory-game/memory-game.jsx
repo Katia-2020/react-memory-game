@@ -9,11 +9,48 @@ class MemoryGame extends React.Component {
     super(props);
 
     this.state = {
-
+      currentCard: '',
+      previousCard: '',
+      isClicked: false,
     };
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(name) {
+    const { isClicked, currentCard, previousCard } = this.state;
+    let newState;
+
+    if (currentCard === '') {
+      newState = {
+        currentCard: name,
+        isClicked: true,
+      };
+    }
+
+    if (currentCard !== '') {
+      newState = {
+        currentCard: name,
+        previousCard: currentCard,
+        isClicked: true,
+      };
+    }
+
+    this.setState(newState);
+  }
+
+  isSameCard() {
+    const { currentCard, previousCard, isClicked } = this.state;
+
+    return !!((currentCard === previousCard) && isClicked);
   }
 
   render() {
+    console.log(this.state);
+
+    const { isClicked } = this.state;
+    const sameCard = this.isSameCard();
+
     return (
       <div className={styles['memory-game']}>
         <Row>
@@ -21,12 +58,12 @@ class MemoryGame extends React.Component {
             <>
               <Column>
                 <div className={styles['memory-game__item']}>
-                  <Card image={item.image} />
+                  <Card image={sameCard && item.url} name={item.name} onClick={this.handleClick} />
                 </div>
               </Column>
               <Column>
                 <div className={styles['memory-game__item']}>
-                  <Card image={item.image} />
+                  <Card image={sameCard && item.url} name={item.name} onClick={this.handleClick} />
                 </div>
               </Column>
             </>

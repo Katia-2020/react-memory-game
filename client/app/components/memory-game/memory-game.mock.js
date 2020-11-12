@@ -1,4 +1,4 @@
-export const images = [
+const images = [
   {
     name: 'ice cream',
     url: 'https://images.unsplash.com/photo-1505394033641-40c6ad1178d7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1406&q=80'
@@ -39,4 +39,6 @@ export const images = [
     name: 'volcano',
     url: 'https://images.unsplash.com/photo-1574786199452-c7a5f69fb6e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
   },
-]
+];
+
+export default images;

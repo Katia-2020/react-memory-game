@@ -1,20 +1,8 @@
 .card {
   width: 100px;
   height: 100px;
-  background-color: #2e3047;
-  border-radius: 25px;
+  background-color: rgb(73, 88, 103);
+  border-radius: 15px;
   overflow: hidden;
   position: relative;
-
-  &__icon {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-    svg {
-      fill: #f7b29b;
-      width: 50px;
-    }
-  }
 }

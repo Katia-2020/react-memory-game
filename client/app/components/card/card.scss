@@ -5,9 +5,11 @@
   border-radius: 15px;
   overflow: hidden;
   position: relative;
+  box-shadow: 5px 5px 9px rgba(73, 88, 103, 0.692);
 
   &:active {
     transform: scale(0.97);
     transition: transform .2s;
+    box-shadow: 5px 5px 9px rgba(33, 41, 49, 0.829);
   }
 }

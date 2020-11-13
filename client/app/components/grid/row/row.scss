@@ -15,12 +15,4 @@
   &--justify-center {
     justify-content: center;
   }
-
-  &--gutters-small {
-    margin-left: -15px;
-
-    >* {
-      padding-left: 15px;
-    }
-  }
 }

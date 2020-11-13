@@ -6,14 +6,14 @@ import Icon from '../icon';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
-const createArray = () => [...Array(images), ...Array(images)].flat();
+// const createArray = () => [...Array(images), ...Array(images)].flat();
 
 class MemoryGame extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      allImages: createArray(),
+      allImages: [],
       currentCard: {
         id: '',
         name: '',
@@ -28,9 +28,9 @@ class MemoryGame extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.shuffleCards();
-  // }
+  componentDidMount() {
+    this.shuffleCards();
+  }
 
   handleClick(name, id) {
     const {
@@ -97,11 +97,11 @@ class MemoryGame extends React.Component {
     return foundImages.includes(name);
   }
 
-  // shuffleCards() {
-  //   const { allImages } = this.state;
-
-  //   allImages.map((image) => image.id = Math.floor(Math.random() * 20));
-  // }
+  shuffleCards() {
+    this.setState({
+     allImages: images.sort(() => Math.random() - 0.5),
+  });
+  }
 
   render() {
     console.log(this.state);
@@ -111,17 +111,16 @@ class MemoryGame extends React.Component {
     return (
       <div className={styles['memory-game']}>
         <Row>
-
-          {allImages.map((item, index) => (
-            <Column key={index} order={item.id}>
+          {allImages.map((item) => (
+            <Column key={item.id}>
               <div className={styles['memory-game__item']}>
                 <Card
-                  id={index}
+                  id={item.id}
                   name={item.name}
                   onClick={this.handleClick}
                 >
-                  {(currentCard.id === index ||
-                    previousCard.id === index) ||
+                  {(currentCard.id === item.id ||
+                    previousCard.id === item.id) ||
                     this.isFoundCard(item.name) ? (
                       <Image url={item.url} />
                     ) : (

@@ -5,4 +5,9 @@
   border-radius: 15px;
   overflow: hidden;
   position: relative;
+
+  &:active {
+    transform: scale(0.97);
+    transition: transform .2s;
+  }
 }

@@ -6,11 +6,14 @@ import Icon from '../icon';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
+const createArray = () => [...Array(images), ...Array(images)].flat();
+
 class MemoryGame extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      allImages: createArray(),
       currentCard: {
         id: '',
         name: '',
@@ -24,6 +27,10 @@ class MemoryGame extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
   }
+
+  // componentDidMount() {
+  //   this.shuffleCards();
+  // }
 
   handleClick(name, id) {
     const {
@@ -42,7 +49,7 @@ class MemoryGame extends React.Component {
       };
     }
 
-    if (currentCard.name && currentCard.name !== previousCard.name) {
+    if (currentCard.name && !previousCard.name) {
       newState = {
         currentCard: {
           id,
@@ -55,15 +62,28 @@ class MemoryGame extends React.Component {
       };
     }
 
-    if (currentCard.name && currentCard.name === previousCard.name) {
+    if (currentCard.name && previousCard.name && currentCard.name !== previousCard.name) {
       newState = {
         currentCard: {
-          id: '',
-          name: '',
+          id,
+          name,
         },
         previousCard: {
           id: '',
           name: '',
+        },
+      };
+    }
+
+    if (currentCard.name && currentCard.name === previousCard.name) {
+      newState = {
+        currentCard: {
+          id,
+          name,
+        },
+        previousCard: {
+          id: currentCard.id,
+          name: currentCard.name,
         },
         foundImages: [...foundImages, currentCard.name],
       };
@@ -77,51 +97,42 @@ class MemoryGame extends React.Component {
     return foundImages.includes(name);
   }
 
+  // shuffleCards() {
+  //   const { allImages } = this.state;
+
+  //   allImages.forEach((image) => {
+  //     const randomNum = Math.floor(Math.random() * 20);
+  //     image.id = randomNum;
+  //   });
+  // }
+
   render() {
     console.log(this.state);
 
-    const { currentCard, previousCard } = this.state;
+    const { currentCard, previousCard, allImages } = this.state;
 
     return (
       <div className={styles['memory-game']}>
         <Row>
-          {images.map((item) => (
-            <>
-              <Column>
-                <div className={styles['memory-game__item']}>
-                  <Card
-                    id={item.id}
-                    name={item.name}
-                    onClick={this.handleClick}
-                  >
-                    {(currentCard.id === item.id ||
-                      previousCard.id === item.id) ||
-                      this.isFoundCard(item.name) ? (
+
+          {allImages.map((item, index) => (
+            <Column key={index} order={item.id}>
+              <div className={styles['memory-game__item']}>
+                <Card
+                  id={index}
+                  name={item.name}
+                  onClick={this.handleClick}
+                >
+                  {(currentCard.id === index ||
+                    previousCard.id === index) ||
+                    this.isFoundCard(item.name) ? (
                       <Image url={item.url} />
-                      ) : (
-                        <Icon />
-                      )}
-                  </Card>
-                </div>
-              </Column>
-              <Column>
-                <div className={styles['memory-game__item']}>
-                  <Card
-                    id={item.id + images.length}
-                    name={item.name}
-                    onClick={this.handleClick}
-                  >
-                    { (currentCard.id === (item.id + images.length) ||
-                       previousCard.id === (item.id + images.length)) ||
-                       this.isFoundCard(item.name) ? (
-                      <Image url={item.url} />
-                      ) : (
-                        <Icon />
-                      )}
-                  </Card>
-                </div>
-              </Column>
-            </>
+                    ) : (
+                      <Icon />
+                    )}
+                </Card>
+              </div>
+            </Column>
           ))}
         </Row>
       </div>

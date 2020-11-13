@@ -100,10 +100,7 @@ class MemoryGame extends React.Component {
   // shuffleCards() {
   //   const { allImages } = this.state;
 
-  //   allImages.forEach((image) => {
-  //     const randomNum = Math.floor(Math.random() * 20);
-  //     image.id = randomNum;
-  //   });
+  //   allImages.map((image) => image.id = Math.floor(Math.random() * 20));
   // }
 
   render() {

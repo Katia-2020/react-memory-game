@@ -99,8 +99,8 @@ class MemoryGame extends React.Component {
 
   shuffleCards() {
     this.setState({
-     allImages: images.sort(() => Math.random() - 0.5),
-  });
+      allImages: images.sort(() => Math.random() - 0.5),
+    });
   }
 
   render() {

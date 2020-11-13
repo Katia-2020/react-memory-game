@@ -11,10 +11,6 @@ class MemoryGame extends React.Component {
     super(props);
 
     this.state = {
-      // currentCard: '',
-      // currentId: 0,
-      // previousId: 0,
-      // previousCard: '',
       currentCard: {
         id: '',
         name: '',
@@ -23,7 +19,6 @@ class MemoryGame extends React.Component {
         id: '',
         name: '',
       },
-      isClicked: false,
       foundImages: [],
     };
 
@@ -35,7 +30,6 @@ class MemoryGame extends React.Component {
       currentCard,
       previousCard,
       foundImages,
-      isClicked,
     } = this.state;
     let newState;
 
@@ -45,7 +39,6 @@ class MemoryGame extends React.Component {
           id,
           name,
         },
-        isClicked: !isClicked,
       };
     }
 
@@ -59,7 +52,6 @@ class MemoryGame extends React.Component {
           id: currentCard.id,
           name: currentCard.name,
         },
-        isClicked: !isClicked,
       };
     }
 
@@ -73,7 +65,6 @@ class MemoryGame extends React.Component {
           id: '',
           name: '',
         },
-        isClicked: !isClicked,
         foundImages: [...foundImages, currentCard.name],
       };
     }
@@ -81,17 +72,15 @@ class MemoryGame extends React.Component {
     this.setState(newState);
   }
 
-  isSameCard() {
-    const { currentCard, previousCard } = this.state;
-
-    return !!(currentCard.name === previousCard.name);
+  isFoundCard(name) {
+    const { foundImages } = this.state;
+    return foundImages.includes(name);
   }
 
   render() {
     console.log(this.state);
 
-    const { currentCard, previousCard, isClicked } = this.state;
-    const sameCard = this.isSameCard();
+    const { currentCard, previousCard } = this.state;
 
     return (
       <div className={styles['memory-game']}>
@@ -105,7 +94,9 @@ class MemoryGame extends React.Component {
                     name={item.name}
                     onClick={this.handleClick}
                   >
-                    {(currentCard.id === item.id) ? (
+                    {(currentCard.id === item.id ||
+                      previousCard.id === item.id) ||
+                      this.isFoundCard(item.name) ? (
                       <Image url={item.url} />
                       ) : (
                         <Icon />
@@ -120,7 +111,9 @@ class MemoryGame extends React.Component {
                     name={item.name}
                     onClick={this.handleClick}
                   >
-                    {(currentCard.id === (item.id + images.length) && previousCard.name) ? (
+                    { (currentCard.id === (item.id + images.length) ||
+                       previousCard.id === (item.id + images.length)) ||
+                       this.isFoundCard(item.name) ? (
                       <Image url={item.url} />
                       ) : (
                         <Icon />

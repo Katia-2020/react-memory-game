@@ -1,0 +1,15 @@
+.button {
+  display: block;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  background-color: rgb(122, 146, 170);
+  border-radius: 10px;
+  position: relative;
+
+  &:active {
+    transform: scale(0.85);
+    transition: transform 400ms;
+    box-shadow: 5px 5px 9px rgba(33, 41, 49, 0.829);
+  }
+}

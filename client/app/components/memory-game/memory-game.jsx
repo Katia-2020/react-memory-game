@@ -5,6 +5,7 @@ import Image from '../image';
 import Icon from '../icon';
 import Button from '../button';
 import Result from '../result';
+import Attempts from '../attempts';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
@@ -24,6 +25,7 @@ class MemoryGame extends React.Component {
       },
       foundImages: [],
       score: 0,
+      attempts: 0,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -40,6 +42,7 @@ class MemoryGame extends React.Component {
       previousCard,
       foundImages,
       score,
+      attempts,
     } = this.state;
 
     const oneCardOpen = currentCard.name && !previousCard.name;
@@ -56,6 +59,7 @@ class MemoryGame extends React.Component {
           id,
           name,
         },
+        attempts: 0,
       };
     }
 
@@ -82,6 +86,7 @@ class MemoryGame extends React.Component {
           id: '',
           name: '',
         },
+        attempts: attempts + 1,
       };
     }
 
@@ -97,6 +102,7 @@ class MemoryGame extends React.Component {
         },
         foundImages: [...foundImages, currentCard.name],
         score: score + 1,
+        attempts: attempts + 1,
       };
     }
 
@@ -116,6 +122,7 @@ class MemoryGame extends React.Component {
       },
       foundImages: [],
       score: 0,
+      attempts: 0,
     });
   }
 
@@ -138,7 +145,9 @@ class MemoryGame extends React.Component {
       previousCard,
       allImages,
       score,
+      attempts,
     } = this.state;
+
     const newGame = !currentCard.id && !previousCard.id;
     const maxScore = allImages.length / 2;
 
@@ -175,6 +184,7 @@ class MemoryGame extends React.Component {
           </Column>
           <Column>
             <Result result={`${score}/${maxScore}`} />
+            <Attempts attempts={attempts} />
           </Column>
         </Row>
       </div>

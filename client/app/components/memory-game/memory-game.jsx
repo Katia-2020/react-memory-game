@@ -3,6 +3,8 @@ import { Row, Column } from '../grid';
 import Card from '../card';
 import Image from '../image';
 import Icon from '../icon';
+import Button from '../button';
+import Result from '../result';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
@@ -21,13 +23,20 @@ class MemoryGame extends React.Component {
         name: '',
       },
       foundImages: [],
+      score: 0,
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
   }
 
   componentDidMount() {
     this.shuffleCards();
+  }
+
+  getScore() {
+    const { foundImages } = this.state;
+    return foundImages.length;
   }
 
   handleClick(name, id) {
@@ -35,12 +44,14 @@ class MemoryGame extends React.Component {
       currentCard,
       previousCard,
       foundImages,
+      score,
     } = this.state;
 
     const oneCardOpen = currentCard.name && !previousCard.name;
     const twoCardsOpen = currentCard.name && previousCard.name;
     const cardsMatch = currentCard.name === previousCard.name;
     const sameCard = currentCard.id === previousCard.id;
+    const alreadyFound = this.isFoundCard(name);
 
     let newState;
 
@@ -79,7 +90,7 @@ class MemoryGame extends React.Component {
       };
     }
 
-    if (twoCardsOpen && cardsMatch && !sameCard) {
+    if (twoCardsOpen && cardsMatch && !sameCard && !alreadyFound) {
       newState = {
         currentCard: {
           id,
@@ -90,10 +101,26 @@ class MemoryGame extends React.Component {
           name: currentCard.name,
         },
         foundImages: [...foundImages, currentCard.name],
+        score: score + 1,
       };
     }
 
     this.setState(newState);
+  }
+
+  handlePlayButtonClick() {
+    this.setState({
+      allImages: images.sort(() => Math.random() - 0.5),
+      currentCard: {
+        id: '',
+        name: '',
+      },
+      previousCard: {
+        id: '',
+        name: '',
+      },
+      foundImages: [],
+    });
   }
 
   isFoundCard(name) {
@@ -110,30 +137,43 @@ class MemoryGame extends React.Component {
   render() {
     console.log(this.state);
 
-    const { currentCard, previousCard, allImages } = this.state;
+    const { currentCard, previousCard, allImages, score } = this.state;
+    const newGame = !currentCard.id && !previousCard.id;
 
     return (
       <div className={styles['memory-game']}>
         <Row>
-          {allImages.map((item) => (
-            <Column key={item.id}>
-              <div className={styles['memory-game__item']}>
-                <Card
-                  id={item.id}
-                  name={item.name}
-                  onClick={this.handleClick}
-                >
-                  {(currentCard.id === item.id ||
-                    previousCard.id === item.id) ||
-                    this.isFoundCard(item.name) ? (
-                      <Image url={item.url} />
-                    ) : (
-                      <Icon />
-                    )}
-                </Card>
-              </div>
-            </Column>
-          ))}
+          <Column>
+            <Button text={newGame ? 'start' : 'play again'} onClick={this.handlePlayButtonClick} />
+          </Column>
+          <Column>
+            <div className={styles['memory-game__body']}>
+              <Row>
+                {allImages.map((item) => (
+                  <Column key={item.id}>
+                    <div className={styles['memory-game__item']}>
+                      <Card
+                        id={item.id}
+                        name={item.name}
+                        onClick={this.handleClick}
+                      >
+                        {(currentCard.id === item.id ||
+                            previousCard.id === item.id) ||
+                            this.isFoundCard(item.name) ? (
+                              <Image url={item.url} />
+                          ) : (
+                            <Icon />
+                          )}
+                      </Card>
+                    </div>
+                  </Column>
+                ))}
+              </Row>
+            </div>
+          </Column>
+          <Column>
+            <Result result={score} />
+          </Column>
         </Row>
       </div>
     );

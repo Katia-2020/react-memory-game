@@ -5,7 +5,14 @@ import styles from './text.scss';
 const cx = classnames.bind(styles);
 
 const Text = (props) => {
-  const { text, size, color, center, cases, weight } = props;
+  const {
+    text,
+    size,
+    color,
+    center,
+    cases,
+    weight,
+  } = props;
 
   return (
     <div className={cx('text', {

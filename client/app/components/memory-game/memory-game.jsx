@@ -133,7 +133,12 @@ class MemoryGame extends React.Component {
   render() {
     console.log(this.state);
 
-    const { currentCard, previousCard, allImages, score } = this.state;
+    const {
+      currentCard,
+      previousCard,
+      allImages,
+      score,
+    } = this.state;
     const newGame = !currentCard.id && !previousCard.id;
     const maxScore = allImages.length / 2;
 

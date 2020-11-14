@@ -34,11 +34,6 @@ class MemoryGame extends React.Component {
     this.shuffleCards();
   }
 
-  getScore() {
-    const { foundImages } = this.state;
-    return foundImages.length;
-  }
-
   handleClick(name, id) {
     const {
       currentCard,
@@ -120,6 +115,7 @@ class MemoryGame extends React.Component {
         name: '',
       },
       foundImages: [],
+      score: 0,
     });
   }
 
@@ -139,6 +135,7 @@ class MemoryGame extends React.Component {
 
     const { currentCard, previousCard, allImages, score } = this.state;
     const newGame = !currentCard.id && !previousCard.id;
+    const maxScore = allImages.length / 2;
 
     return (
       <div className={styles['memory-game']}>
@@ -172,7 +169,7 @@ class MemoryGame extends React.Component {
             </div>
           </Column>
           <Column>
-            <Result result={score} />
+            <Result result={`${score}/${maxScore}`} />
           </Column>
         </Row>
       </div>

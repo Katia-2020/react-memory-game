@@ -1,15 +1,16 @@
 .button {
   display: block;
-  width: 150px;
-  height: 150px;
+  width: 170px;
+  height: 170px;
   cursor: pointer;
   background-color: rgb(122, 146, 170);
+  box-shadow: 3px 5px 30px rgba(41, 52, 63, 0.445);
   border-radius: 10px;
   position: relative;
 
   &:active {
-    transform: scale(0.85);
+    transform: scale(0.9);
     transition: transform 400ms;
-    box-shadow: 5px 5px 9px rgba(33, 41, 49, 0.829);
+    box-shadow: 5px 5px 30px rgba(32, 51, 73, 0.829);
   }
 }

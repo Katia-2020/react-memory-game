@@ -6,8 +6,6 @@ import Icon from '../icon';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
-// const createArray = () => [...Array(images), ...Array(images)].flat();
-
 class MemoryGame extends React.Component {
   constructor(props) {
     super(props);
@@ -38,6 +36,12 @@ class MemoryGame extends React.Component {
       previousCard,
       foundImages,
     } = this.state;
+
+    const oneCardOpen = currentCard.name && !previousCard.name;
+    const twoCardsOpen = currentCard.name && previousCard.name;
+    const cardsMatch = currentCard.name === previousCard.name;
+    const sameCard = currentCard.id === previousCard.id;
+
     let newState;
 
     if (!currentCard.name) {
@@ -49,7 +53,7 @@ class MemoryGame extends React.Component {
       };
     }
 
-    if (currentCard.name && !previousCard.name) {
+    if (oneCardOpen || (twoCardsOpen && cardsMatch && sameCard)) {
       newState = {
         currentCard: {
           id,
@@ -62,7 +66,7 @@ class MemoryGame extends React.Component {
       };
     }
 
-    if (currentCard.name && previousCard.name && currentCard.name !== previousCard.name) {
+    if (twoCardsOpen && !cardsMatch) {
       newState = {
         currentCard: {
           id,
@@ -75,9 +79,7 @@ class MemoryGame extends React.Component {
       };
     }
 
-    if (currentCard.name &&
-        currentCard.name === previousCard.name &&
-        currentCard.id !== previousCard.id) {
+    if (twoCardsOpen && cardsMatch && !sameCard) {
       newState = {
         currentCard: {
           id,
@@ -88,21 +90,6 @@ class MemoryGame extends React.Component {
           name: currentCard.name,
         },
         foundImages: [...foundImages, currentCard.name],
-      };
-    }
-
-    if (currentCard.name &&
-        currentCard.name === previousCard.name &&
-        currentCard.id === previousCard.id) {
-      newState = {
-        currentCard: {
-          id,
-          name,
-        },
-        previousCard: {
-          id: currentCard.id,
-          name: currentCard.name,
-        },
       };
     }
 

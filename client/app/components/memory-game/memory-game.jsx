@@ -75,7 +75,9 @@ class MemoryGame extends React.Component {
       };
     }
 
-    if (currentCard.name && currentCard.name === previousCard.name) {
+    if (currentCard.name &&
+        currentCard.name === previousCard.name &&
+        currentCard.id !== previousCard.id) {
       newState = {
         currentCard: {
           id,
@@ -86,6 +88,21 @@ class MemoryGame extends React.Component {
           name: currentCard.name,
         },
         foundImages: [...foundImages, currentCard.name],
+      };
+    }
+
+    if (currentCard.name &&
+        currentCard.name === previousCard.name &&
+        currentCard.id === previousCard.id) {
+      newState = {
+        currentCard: {
+          id,
+          name,
+        },
+        previousCard: {
+          id: currentCard.id,
+          name: currentCard.name,
+        },
       };
     }
 

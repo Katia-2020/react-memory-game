@@ -87,7 +87,10 @@ class MemoryGame extends React.Component {
 
     const alreadyFound = this.isFoundCard(name);
 
-    if (blocked) {
+    if (blocked ||
+      (name === currentCard.name && id === currentCard.id) ||
+      alreadyFound
+    ) {
       return;
     }
 

@@ -7,30 +7,31 @@ import Attempts from '../attempts';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
+const defaultState = {
+  allImages: [],
+  currentCard: {
+    id: '',
+    name: '',
+  },
+  previousCard: {
+    id: '',
+    name: '',
+  },
+  gameStarted: false,
+  foundImages: [],
+  score: 0,
+  attempts: 0,
+  blocked: false,
+};
+
 class MemoryGame extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      allImages: [],
-      currentCard: {
-        id: '',
-        name: '',
-      },
-      previousCard: {
-        id: '',
-        name: '',
-      },
-      gameStarted: false,
-      foundImages: [],
-      score: 0,
-      attempts: 0,
-      blocked: false,
-    };
+    this.state = defaultState;
 
     this.handleClick = this.handleClick.bind(this);
     this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
-    this.timer = null;
   }
 
   componentDidMount() {
@@ -57,7 +58,7 @@ class MemoryGame extends React.Component {
       isPrevCardSet &&
       updatedCurrentCard.name !== updatedPrevCard.name);
 
-    if(notMatching) {
+    if (notMatching) {
       setTimeout(() => {
         this.setState({
           currentCard: {
@@ -90,7 +91,7 @@ class MemoryGame extends React.Component {
       return;
     }
 
-    // no cards were open
+    // no cards were open, opening the first card
     if (!currentCard.name) {
       this.setState({
         currentCard: {
@@ -101,24 +102,7 @@ class MemoryGame extends React.Component {
       });
     }
 
-    // two cards open, matching card found
-    if (name === currentCard.name && id !== currentCard.id && !alreadyFound) {
-      this.setState({
-        currentCard: {
-          id,
-          name,
-        },
-        previousCard: {
-          id: '',
-          name: '',
-        },
-        foundImages: [...foundImages, name],
-        score: score + 1,
-        // attempts: attempts + 1,
-      });
-    }
-
-    // opening the second card
+    // opening the second card, cards are not matching
     if (name !== currentCard.name && currentCard.name && !previousCard.name) {
       const updatedCurrentCard = {
         id,
@@ -140,36 +124,28 @@ class MemoryGame extends React.Component {
       this.handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard);
     }
 
-    // two cards open, not matching
-    if (name !== currentCard.name && currentCard.name && previousCard.name) {
+    // two cards open, matching card found
+    if (name === currentCard.name && id !== currentCard.id && !alreadyFound) {
       this.setState({
         currentCard: {
-          id,
-          name,
+          id: '',
+          name: '',
         },
         previousCard: {
           id: '',
           name: '',
         },
+        foundImages: [...foundImages, name],
+        score: score + 1,
+        attempts: attempts + 1,
       });
     }
   }
 
   handlePlayButtonClick() {
     this.setState({
+      ...defaultState,
       allImages: images.sort(() => Math.random() - 0.5),
-      currentCard: {
-        id: '',
-        name: '',
-      },
-      previousCard: {
-        id: '',
-        name: '',
-      },
-      gameStarted: false,
-      foundImages: [],
-      score: 0,
-      attempts: 0,
     });
   }
 

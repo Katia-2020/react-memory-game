@@ -1,12 +1,14 @@
 import React from 'react';
 import styles from './card.scss';
+import Image from '../image';
+import Icon from '../icon';
 
 const Card = (props) => {
   const {
     id,
     name,
     onClick,
-    children,
+    content,
   } = props;
 
   const handleClick = () => {
@@ -15,7 +17,11 @@ const Card = (props) => {
 
   return (
     <div className={styles['card']} onClick={handleClick}>
-      {children}
+      {content ? (
+        <Image url={content} />
+      ) : (
+        <Icon />
+      )}
     </div>
   );
 };

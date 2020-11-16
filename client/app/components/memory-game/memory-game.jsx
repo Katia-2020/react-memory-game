@@ -1,8 +1,6 @@
 import React from 'react';
 import { Row, Column } from '../grid';
 import Card from '../card';
-import Image from '../image';
-import Icon from '../icon';
 import Button from '../button';
 import Result from '../result';
 import Attempts from '../attempts';
@@ -23,6 +21,7 @@ class MemoryGame extends React.Component {
         id: '',
         name: '',
       },
+      gameStarted: false,
       foundImages: [],
       score: 0,
       attempts: 0,
@@ -35,6 +34,18 @@ class MemoryGame extends React.Component {
 
   componentDidMount() {
     this.shuffleCards();
+  }
+
+  getCardContent(item) {
+    const { currentCard, previousCard } = this.state;
+
+    if ((currentCard.id === item.id ||
+      previousCard.id === item.id) ||
+      this.isFoundCard(item.name)) {
+      return item.url;
+    }
+
+    return '';
   }
 
   handleClick(name, id) {
@@ -55,6 +66,7 @@ class MemoryGame extends React.Component {
           id,
           name,
         },
+        gameStarted: true,
       });
     }
 
@@ -107,7 +119,6 @@ class MemoryGame extends React.Component {
     // this.timer = setTimeout(() => {
     //   this.resetCards()
     // }, 700)
-
   }
 
   handlePlayButtonClick() {
@@ -121,6 +132,7 @@ class MemoryGame extends React.Component {
         id: '',
         name: '',
       },
+      gameStarted: false,
       foundImages: [],
       score: 0,
       attempts: 0,
@@ -138,63 +150,44 @@ class MemoryGame extends React.Component {
     });
   }
 
-  // resetCards() {
-  //   this.setState({
-  //     currentCard: {
-  //       id: '',
-  //       name: '',
-  //     },
-  //     previousCard: {
-  //       id: '',
-  //       name: '',
-  //     },
-  //   });
-  //   clearInterval(this.timer);
-  // }
+  createCards(item) {
+    return (
+      <Column key={item.id}>
+        <div className={styles['memory-game__item']}>
+          <Card
+            id={item.id}
+            name={item.name}
+            onClick={this.handleClick}
+            content={this.getCardContent(item)}
+          />
+        </div>
+      </Column>
+    );
+  }
 
   render() {
     console.log(this.state);
 
     const {
-      currentCard,
-      previousCard,
       allImages,
-      foundImages,
       score,
       attempts,
+      gameStarted,
     } = this.state;
 
-    const newGame = !currentCard.id && !previousCard.id && !foundImages.length;
     const maxScore = allImages.length / 2;
+    const isNewGame = gameStarted ? 'play again' : 'start';
 
     return (
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            <Button text={newGame ? 'start' : 'play again'} onClick={this.handlePlayButtonClick} />
+            <Button text={isNewGame} onClick={this.handlePlayButtonClick} />
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
               <Row>
-                {allImages.map((item) => (
-                  <Column key={item.id}>
-                    <div className={styles['memory-game__item']}>
-                      <Card
-                        id={item.id}
-                        name={item.name}
-                        onClick={this.handleClick}
-                      >
-                        {(currentCard.id === item.id ||
-                            previousCard.id === item.id) ||
-                            this.isFoundCard(item.name) ? (
-                              <Image url={item.url} />
-                          ) : (
-                            <Icon />
-                          )}
-                      </Card>
-                    </div>
-                  </Column>
-                ))}
+                {allImages.map(item => this.createCards(item))}
               </Row>
             </div>
           </Column>

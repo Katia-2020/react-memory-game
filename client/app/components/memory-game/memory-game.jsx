@@ -46,39 +46,21 @@ class MemoryGame extends React.Component {
       attempts,
     } = this.state;
 
-    const oneCardOpen = currentCard.name && !previousCard.name;
-    const twoCardsOpen = currentCard.name && previousCard.name;
-    const cardsMatch = currentCard.name === previousCard.name;
-    const sameCard = currentCard.id === previousCard.id;
     const alreadyFound = this.isFoundCard(name);
 
-    let newState;
-
+    // no cards were open
     if (!currentCard.name) {
-      newState = {
+      this.setState({
         currentCard: {
           id,
           name,
         },
-        attempts: 0,
-      };
+      });
     }
 
-    if (oneCardOpen || (twoCardsOpen && cardsMatch && sameCard)) {
-      newState = {
-        currentCard: {
-          id,
-          name,
-        },
-        previousCard: {
-          id: currentCard.id,
-          name: currentCard.name,
-        },   
-      };
-    }
-
-    if (twoCardsOpen && !cardsMatch) {
-      newState = {
+    // two cards open, matching card found
+    if (name === currentCard.name && id !== currentCard.id && !alreadyFound) {
+      this.setState({
         currentCard: {
           id,
           name,
@@ -87,12 +69,15 @@ class MemoryGame extends React.Component {
           id: '',
           name: '',
         },
-        attempts: attempts + 1,
-      };
+        foundImages: [...foundImages, name],
+        score: score + 1,
+        // attempts: attempts + 1,
+      });
     }
 
-    if (twoCardsOpen && cardsMatch && !sameCard && !alreadyFound) {
-      newState = {
+    // opening the second card
+    if (name !== currentCard.name && currentCard.name && !previousCard.name) {
+      this.setState({
         currentCard: {
           id,
           name,
@@ -101,13 +86,23 @@ class MemoryGame extends React.Component {
           id: currentCard.id,
           name: currentCard.name,
         },
-        foundImages: [...foundImages, currentCard.name],
-        score: score + 1,
         attempts: attempts + 1,
-      };
+      });
     }
 
-    this.setState(newState);
+    // two cards open, not matching
+    if (name !== currentCard.name && currentCard.name && previousCard.name) {
+      this.setState({
+        currentCard: {
+          id,
+          name,
+        },
+        previousCard: {
+          id: '',
+          name: '',
+        },
+      });
+    }
 
     // this.timer = setTimeout(() => {
     //   this.resetCards()
@@ -164,11 +159,12 @@ class MemoryGame extends React.Component {
       currentCard,
       previousCard,
       allImages,
+      foundImages,
       score,
       attempts,
     } = this.state;
 
-    const newGame = !currentCard.id && !previousCard.id;
+    const newGame = !currentCard.id && !previousCard.id && !foundImages.length;
     const maxScore = allImages.length / 2;
 
     return (

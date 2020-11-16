@@ -25,6 +25,7 @@ class MemoryGame extends React.Component {
       foundImages: [],
       score: 0,
       attempts: 0,
+      blocked: false,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -48,6 +49,31 @@ class MemoryGame extends React.Component {
     return '';
   }
 
+  handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard) {
+    const isCurrentCardSet = (updatedCurrentCard && updatedCurrentCard.name);
+    const isPrevCardSet = (updatedPrevCard && updatedPrevCard.name);
+    const notMatching = (
+      isCurrentCardSet &&
+      isPrevCardSet &&
+      updatedCurrentCard.name !== updatedPrevCard.name);
+
+    if(notMatching) {
+      setTimeout(() => {
+        this.setState({
+          currentCard: {
+            id: '',
+            name: '',
+          },
+          previousCard: {
+            id: '',
+            name: '',
+          },
+          blocked: false,
+        });
+      }, 500);
+    }
+  }
+
   handleClick(name, id) {
     const {
       currentCard,
@@ -55,9 +81,14 @@ class MemoryGame extends React.Component {
       foundImages,
       score,
       attempts,
+      blocked,
     } = this.state;
 
     const alreadyFound = this.isFoundCard(name);
+
+    if (blocked) {
+      return;
+    }
 
     // no cards were open
     if (!currentCard.name) {
@@ -89,17 +120,24 @@ class MemoryGame extends React.Component {
 
     // opening the second card
     if (name !== currentCard.name && currentCard.name && !previousCard.name) {
+      const updatedCurrentCard = {
+        id,
+        name,
+      };
+
+      const updatedPrevCard = {
+        id: currentCard.id,
+        name: currentCard.name,
+      };
+
       this.setState({
-        currentCard: {
-          id,
-          name,
-        },
-        previousCard: {
-          id: currentCard.id,
-          name: currentCard.name,
-        },
+        currentCard: updatedCurrentCard,
+        previousCard: updatedPrevCard,
         attempts: attempts + 1,
+        blocked: true,
       });
+
+      this.handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard);
     }
 
     // two cards open, not matching
@@ -115,10 +153,6 @@ class MemoryGame extends React.Component {
         },
       });
     }
-
-    // this.timer = setTimeout(() => {
-    //   this.resetCards()
-    // }, 700)
   }
 
   handlePlayButtonClick() {

@@ -8,6 +8,32 @@
   position: relative;
   box-shadow: 5px 5px 9px rgba(73, 88, 103, 0.692);
 
+  &--active {
+    animation-name: shake;
+    animation-duration: 0.4s;
+    @keyframes shake {
+      0% {
+        transform: rotate(0deg);
+      }
+      20% {
+        transform: rotate(5deg);
+      }
+      40% {
+        transform: rotate(-5deg);
+      }
+      60% {
+        transform: rotate(5deg);
+      }
+      80% {
+        transform: rotate(-5deg);
+      }
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+  }
+
+
   &:active {
     transform: scale(0.85);
     transition: transform 400ms;

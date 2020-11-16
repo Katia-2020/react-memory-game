@@ -22,6 +22,7 @@ const defaultState = {
   score: 0,
   attempts: 0,
   blocked: false,
+  matchingCard: '',
 };
 
 class MemoryGame extends React.Component {
@@ -70,6 +71,7 @@ class MemoryGame extends React.Component {
             name: '',
           },
           blocked: false,
+          matchingCard: '',
         });
       }, 500);
     }
@@ -102,6 +104,7 @@ class MemoryGame extends React.Component {
           name,
         },
         gameStarted: true,
+        matchingCard: '',
       });
     }
 
@@ -121,6 +124,7 @@ class MemoryGame extends React.Component {
         currentCard: updatedCurrentCard,
         previousCard: updatedPrevCard,
         attempts: attempts + 1,
+        matchingCard: '',
         blocked: true,
       });
 
@@ -141,6 +145,7 @@ class MemoryGame extends React.Component {
         foundImages: [...foundImages, name],
         score: score + 1,
         attempts: attempts + 1,
+        matchingCard: name,
       });
     }
   }
@@ -164,6 +169,7 @@ class MemoryGame extends React.Component {
   }
 
   createCards(item) {
+    const { matchingCard } = this.state;
     return (
       <Column key={item.id}>
         <div className={styles['memory-game__item']}>
@@ -172,6 +178,7 @@ class MemoryGame extends React.Component {
             name={item.name}
             onClick={this.handleClick}
             content={this.getCardContent(item)}
+            active={matchingCard === item.name}
           />
         </div>
       </Column>
@@ -186,6 +193,7 @@ class MemoryGame extends React.Component {
       score,
       attempts,
       gameStarted,
+      matchingCard,
     } = this.state;
 
     const maxScore = allImages.length / 2;
@@ -205,7 +213,7 @@ class MemoryGame extends React.Component {
             </div>
           </Column>
           <Column>
-            <Result result={`${score}/${maxScore}`} />
+            <Result result={`${score}/${maxScore}`} active={matchingCard} />
             <Attempts attempts={attempts} />
           </Column>
         </Row>

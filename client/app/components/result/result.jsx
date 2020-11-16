@@ -1,12 +1,17 @@
 import React from 'react';
+import classnames from 'classnames/bind';
 import Text from '../text';
 import styles from './result.scss';
 
+const cx = classnames.bind(styles);
+
 const Result = (props) => {
-  const { result } = props;
+  const { result, active } = props;
 
   return (
-    <div className={styles['result']}>
+    <div className={cx('result', {
+      'result--active': active,
+    })}>
       <div className={styles['result__header']}>
         <Text text="your score:" cases="uppercase" color="dark-blue" weight="bold" />
       </div>

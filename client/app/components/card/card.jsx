@@ -1,7 +1,10 @@
 import React from 'react';
+import classnames from 'classnames/bind';
 import styles from './card.scss';
 import Image from '../image';
 import Icon from '../icon';
+
+const cx = classnames.bind(styles);
 
 const Card = (props) => {
   const {
@@ -9,6 +12,7 @@ const Card = (props) => {
     name,
     onClick,
     content,
+    active,
   } = props;
 
   const handleClick = () => {
@@ -16,7 +20,12 @@ const Card = (props) => {
   };
 
   return (
-    <div className={styles['card']} onClick={handleClick}>
+    <div
+      className={cx('card', {
+        'card--active': active,
+      })}
+      onClick={handleClick}
+    >
       {content ? (
         <Image url={content} />
       ) : (

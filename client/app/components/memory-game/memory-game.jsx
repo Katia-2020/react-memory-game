@@ -30,6 +30,7 @@ class MemoryGame extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
+    this.timer = null;
   }
 
   componentDidMount() {
@@ -72,7 +73,7 @@ class MemoryGame extends React.Component {
         previousCard: {
           id: currentCard.id,
           name: currentCard.name,
-        },
+        },   
       };
     }
 
@@ -107,6 +108,11 @@ class MemoryGame extends React.Component {
     }
 
     this.setState(newState);
+
+    // this.timer = setTimeout(() => {
+    //   this.resetCards()
+    // }, 700)
+
   }
 
   handlePlayButtonClick() {
@@ -136,6 +142,20 @@ class MemoryGame extends React.Component {
       allImages: images.sort(() => Math.random() - 0.5),
     });
   }
+
+  // resetCards() {
+  //   this.setState({
+  //     currentCard: {
+  //       id: '',
+  //       name: '',
+  //     },
+  //     previousCard: {
+  //       id: '',
+  //       name: '',
+  //     },
+  //   });
+  //   clearInterval(this.timer);
+  // }
 
   render() {
     console.log(this.state);

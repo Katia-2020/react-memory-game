@@ -8,7 +8,7 @@ import { getResults } from '../utilities/results.utilities';
 const cx = classnames.bind(styles);
 
 const Banner = (props) => {
-  const { score } = props;
+  const { score, count } = props;
   const activeColor = getResults(score).color;
 
   return (
@@ -18,7 +18,7 @@ const Banner = (props) => {
         [`banner__item--${activeColor}`]: activeColor,
       })}
       >
-        <Text text={`Your result is ${score}`} center size="medium" weight="bold" color="dark-blue" />
+        <Text text={`Your result is ${score}. Your time: ${count}`} center size="medium" weight="bold" color="dark-blue" />
       </div>
       <ResultsTable activeColor={activeColor} />
     </div>

@@ -5,13 +5,29 @@ import styles from './attempts.scss';
 const Attempts = (props) => {
   const { attempts } = props;
 
+  const getColor = () => {
+    if (attempts < 15) {
+      return 'light-green';
+    }
+
+    if (attempts >= 15 && attempts < 30) {
+      return 'light-yellow';
+    }
+
+    if (attempts >= 30 && attempts <= 45) {
+      return 'light-pink';
+    }
+
+    return 'light-purple';
+  }
+
   return (
     <div className={styles['attempts']}>
       <div className={styles['attempts__header']}>
-        <Text text="attempts:" cases="uppercase" color="dark-blue" weight="bold" />
+        <Text text="your score:" cases="uppercase" color="dark-blue" weight="bold" />
       </div>
       <div className={styles['attempts__body']}>
-        <Text text={attempts} size="large" color="light-pink" weight="bold" />
+        <Text text={attempts} size="large" color={getColor()} weight="bold" />
       </div>
     </div>
   );

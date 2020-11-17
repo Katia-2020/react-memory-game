@@ -1,9 +1,4 @@
-const ranges = [
-  { min: 10, max: 18 },
-  { min: 17, max: 30 },
-  { min: 30, max: 45 },
-  { min: 46, max: 400 },
-];
+import { ranges } from './ranges.utilities';
 
 export const getResults = (score) => {
   if (score <= ranges[0].max) {

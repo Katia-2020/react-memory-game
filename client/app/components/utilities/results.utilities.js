@@ -1,12 +1,12 @@
 export const getResults = (score) => {
-  if (score < 15) {
+  if (score < 18) {
     return {
       feedback: 'well done!',
       color: 'light-green',
     };
   }
 
-  if (score >= 15 && score < 30) {
+  if (score >= 18 && score < 30) {
     return {
       feedback: 'good!',
       color: 'light-yellow',
@@ -25,5 +25,3 @@ export const getResults = (score) => {
     color: 'light-purple',
   };
 };
-
-

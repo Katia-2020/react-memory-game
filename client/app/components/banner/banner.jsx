@@ -9,17 +9,18 @@ const cx = classnames.bind(styles);
 
 const Banner = (props) => {
   const { score } = props;
+  const activeColor = getResults(score).color;
 
   return (
     <div className={styles.banner}>
       <Text text={getResults(score).feedback} center size="large" cases="uppercase" color="dark-blue" />
       <div className={cx('banner__item', {
-        [`banner__item--${getResults(score).color}`]: getResults(score).color,
+        [`banner__item--${activeColor}`]: activeColor,
       })}
       >
         <Text text={`Your result is ${score}`} center size="medium" weight="bold" color="dark-blue" />
       </div>
-      <ResultsTable />
+      <ResultsTable activeColor={activeColor} />
     </div>
   );
 };

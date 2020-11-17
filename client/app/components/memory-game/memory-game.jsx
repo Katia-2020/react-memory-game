@@ -21,7 +21,7 @@ const defaultState = {
   gameStarted: false,
   foundImages: [],
   score: 0,
-  attempts: 10,
+  attempts: 0,
   blocked: false,
   matchingCard: '',
 };
@@ -216,7 +216,7 @@ class MemoryGame extends React.Component {
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
-              {gameEnd ? (
+              {!gameEnd ? (
                 <Row>
                   {allImages.map(item => this.createCards(item))}
                 </Row>

@@ -1,12 +1,14 @@
 .banner {
   background-color: rgb(247, 247, 255);
-  width: 525px;
   border-radius: 15px;
   margin: auto;
 
+  > * {
+    margin: 50px auto;
+  }
+
   &__item {
-    padding: 10px;
-    margin: 20px;
+    padding: 25px 10px;
     border-radius: 15px;
 
     &--light-green {

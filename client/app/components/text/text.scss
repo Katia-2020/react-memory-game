@@ -17,12 +17,24 @@
     color: rgb(255, 42, 95);
   }
 
+  &--color-light-green {
+    color: rgb(124, 255, 92);
+  }
+
+  &--color-light-yellow {
+    color: rgb(255, 243, 73);
+  }
+
   &--color-light-pink {
-    color: rgb(255, 154, 147);
+    color: rgb(238, 133, 125);
+  }
+
+  &--color-light-purple {
+    color: rgb(198, 75, 255);
   }
 
   &--color-dark-blue {
-    color: rgb(5, 33, 61);;
+    color: rgb(5, 33, 61);
   }
 
   &--cases-uppercase {
@@ -33,11 +45,15 @@
     font-weight: bold;
   }
 
-  &--center {
+  &--absolute {
     text-align: center;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  &--center {
+    text-align: center;
   }
 }

@@ -10,6 +10,7 @@ const Text = (props) => {
     size,
     color,
     center,
+    absolute,
     cases,
     weight,
   } = props;
@@ -20,6 +21,7 @@ const Text = (props) => {
       [`text--color-${color}`]: color,
       [`text--cases-${cases}`]: cases,
       [`text--weight-${weight}`]: weight,
+      'text--absolute': absolute,
       'text--center': center,
     })}
     >

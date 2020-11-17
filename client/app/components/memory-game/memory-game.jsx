@@ -4,6 +4,7 @@ import Card from '../card';
 import Button from '../button';
 import Result from '../result';
 import Attempts from '../attempts';
+import Banner from '../banner';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
@@ -20,7 +21,7 @@ const defaultState = {
   gameStarted: false,
   foundImages: [],
   score: 0,
-  attempts: 0,
+  attempts: 10,
   blocked: false,
   matchingCard: '',
 };
@@ -37,6 +38,14 @@ class MemoryGame extends React.Component {
 
   componentDidMount() {
     this.shuffleCards();
+  }
+
+  componentWillUnmount() {
+    const { allImages, foundImages } = this.state;
+
+    if (foundImages.length === (allImages.length / 2)) {
+      this.shuffleCards();
+    }
   }
 
   getCardContent(item) {
@@ -151,10 +160,7 @@ class MemoryGame extends React.Component {
   }
 
   handlePlayButtonClick() {
-    this.setState({
-      ...defaultState,
-      allImages: images.sort(() => Math.random() - 0.5),
-    });
+    this.shuffleCards();
   }
 
   isFoundCard(name) {
@@ -164,6 +170,7 @@ class MemoryGame extends React.Component {
 
   shuffleCards() {
     this.setState({
+      ...defaultState,
       allImages: images.sort(() => Math.random() - 0.5),
     });
   }
@@ -190,6 +197,7 @@ class MemoryGame extends React.Component {
 
     const {
       allImages,
+      foundImages,
       score,
       attempts,
       gameStarted,
@@ -198,6 +206,7 @@ class MemoryGame extends React.Component {
 
     const maxScore = allImages.length / 2;
     const isNewGame = gameStarted ? 'play again' : 'start';
+    const gameEnd = maxScore === foundImages.length;
 
     return (
       <div className={styles['memory-game']}>
@@ -207,9 +216,15 @@ class MemoryGame extends React.Component {
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
-              <Row>
-                {allImages.map(item => this.createCards(item))}
-              </Row>
+              {gameEnd ? (
+                <Row>
+                  {allImages.map(item => this.createCards(item))}
+                </Row>
+              ) :
+                (
+                  <Banner attempts={attempts} />
+                )}
+
             </div>
           </Column>
           <Column>

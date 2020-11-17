@@ -4,6 +4,7 @@ import Card from '../card';
 import Button from '../button';
 import Result from '../result';
 import Attempts from '../attempts';
+import GameName from '../game-name';
 import Banner from '../banner';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
@@ -205,14 +206,16 @@ class MemoryGame extends React.Component {
     } = this.state;
 
     const maxScore = allImages.length / 2;
-    const isNewGame = gameStarted ? 'play again' : 'start';
-    const gameEnd = maxScore === foundImages.length;
+    const gameEnd = (maxScore === foundImages.length);
+    const isNewGame = !gameEnd ? 'start again' : 'start';
 
     return (
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            <Button text={isNewGame} onClick={this.handlePlayButtonClick} />
+            {!gameStarted && !gameEnd ?
+              <GameName /> :
+              <Button text={isNewGame} onClick={this.handlePlayButtonClick} />}
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>

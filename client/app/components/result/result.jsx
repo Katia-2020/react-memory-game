@@ -13,7 +13,7 @@ const Result = (props) => {
       'result--active': active,
     })}>
       <div className={styles['result__header']}>
-        <Text text="your score:" cases="uppercase" color="dark-blue" weight="bold" />
+        <Text text="matched:" cases="uppercase" color="dark-blue" weight="bold" />
       </div>
       <div className={styles['result__body']}>
         <Text text={result} size="large" color="pink" weight="bold" />

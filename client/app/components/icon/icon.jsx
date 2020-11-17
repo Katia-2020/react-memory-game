@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './icon.scss';
-import iconCard from './svg';
+import { iconCard } from './svg';
 
 const Icon = () => (
   <div className={styles.icon}>

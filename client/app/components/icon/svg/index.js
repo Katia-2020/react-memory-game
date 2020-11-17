@@ -1,3 +1,1 @@
-import iconCard from './back-card.svg';
-
-export default iconCard;
+export { default as iconCard } from './back-card.svg';

@@ -9,38 +9,39 @@ const Banner = (props) => {
   const { attempts } = props;
 
   const getResults = () => {
-  //   switch (attempts) {
-  //     case (attempts < 15): return 'well done!';
-  //     case (attempts >= 15 && attempts < 30): return 'good!';
-  //     case (attempts >= 30 && attempts <= 45): return 'not too bad!';
-  //     default: return 'another try?';
-  //   }
-  // }
-    if (attempts < 15) {
-      return {
+    let result = {};
+
+    switch (attempts) {
+      case (attempts < 15): result = {
         feedback: 'well done!',
         color: 'light-green',
       };
-    }
 
-    if (attempts >= 15 && attempts < 30) {
-      return {
+        break;
+
+      case (attempts >= 15 && attempts < 30): result = {
         feedback: 'good!',
         color: 'light-yellow',
       };
-    }
 
-    if (attempts >= 30 && attempts <= 45) {
-      return {
+        break;
+
+      case (attempts >= 30 && attempts <= 45): result = {
         feedback: 'not too bad!',
         color: 'light-pink',
       };
+
+        break;
+
+      default: result = {
+        feedback: 'another try?',
+        color: 'light-purple',
+      };
+
+        break;
     }
 
-    return {
-      feedback: 'another try?',
-      color: 'light-purple',
-    };
+    return result;
   };
 
   return (

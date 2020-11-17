@@ -3,7 +3,7 @@ import { Row, Column } from '../grid';
 import Card from '../card';
 import Button from '../button';
 import Result from '../result';
-import Attempts from '../attempts';
+import Score from '../score';
 import GameName from '../game-name';
 import Banner from '../banner';
 import images from './memory-game.mock';
@@ -21,8 +21,8 @@ const defaultState = {
   },
   gameStarted: false,
   foundImages: [],
+  matched: 0,
   score: 0,
-  attempts: 0,
   blocked: false,
   matchingCard: '',
 };
@@ -92,8 +92,8 @@ class MemoryGame extends React.Component {
       currentCard,
       previousCard,
       foundImages,
+      matched,
       score,
-      attempts,
       blocked,
     } = this.state;
 
@@ -133,7 +133,7 @@ class MemoryGame extends React.Component {
       this.setState({
         currentCard: updatedCurrentCard,
         previousCard: updatedPrevCard,
-        attempts: attempts + 1,
+        score: score + 1,
         matchingCard: '',
         blocked: true,
       });
@@ -153,8 +153,8 @@ class MemoryGame extends React.Component {
           name: '',
         },
         foundImages: [...foundImages, name],
+        matched: matched + 1,
         score: score + 1,
-        attempts: attempts + 1,
         matchingCard: name,
       });
     }
@@ -199,14 +199,14 @@ class MemoryGame extends React.Component {
     const {
       allImages,
       foundImages,
+      matched,
       score,
-      attempts,
       gameStarted,
       matchingCard,
     } = this.state;
 
-    const maxScore = allImages.length / 2;
-    const gameEnd = (maxScore === foundImages.length);
+    const maxMatched = allImages.length / 2;
+    const gameEnd = (maxMatched === foundImages.length);
     const isNewGame = !gameEnd ? 'start again' : 'start';
 
     return (
@@ -225,14 +225,14 @@ class MemoryGame extends React.Component {
                 </Row>
               ) :
                 (
-                  <Banner attempts={attempts} />
+                  <Banner score={score} />
                 )}
 
             </div>
           </Column>
           <Column>
-            <Result result={`${score}/${maxScore}`} active={matchingCard} />
-            <Attempts attempts={attempts} />
+            <Result result={`${matched}/${maxMatched}`} active={matchingCard} />
+            <Score score={score} />
           </Column>
         </Row>
       </div>

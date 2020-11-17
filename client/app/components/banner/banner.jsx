@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames/bind';
 import styles from './banner.scss';
 import Text from '../text';
+import ResultsTable from '../results-table';
 import { getResults } from '../utilities/results.utilities';
 
 const cx = classnames.bind(styles);
@@ -16,8 +17,9 @@ const Banner = (props) => {
         [`banner__item--${getResults(score).color}`]: getResults(score).color,
       })}
       >
-        <Text text={`Your result is ${score}`} center size="medium" color="dark-blue" />
+        <Text text={`Your result is ${score}`} center size="medium" weight="bold" color="dark-blue" />
       </div>
+      <ResultsTable />
     </div>
   );
 };

@@ -7,28 +7,36 @@ import { Column, Row } from '../grid';
 
 const cx = classnames.bind(styles);
 
-const ResultsTable = () => (
-  <div className={styles['results-table']}>
-    {resultsArray.map((item, index) => (
-      <div
-        key={index}
-        className={cx('results-table__item', {
-          [`results-table__item--${getResults(item.result).color}`]: getResults(item.result).color,
-        })}
-      >
-        {' '}
-        <Row>
-          <Column grow>
-            <Text text={item.text} cases="uppercase" color="dark-blue" />
-          </Column>
-          <Column shrink>
-            <Text text={item.range} color="dark-blue" weight="bold"/>
-          </Column>
-        </Row>
-      </div>
-    ))}
-  </div>
+const ResultsTable = (props) => {
+  const { activeColor } = props;
 
-);
+  return (
+    <div className={styles['results-table']}>
+      {resultsArray.map((item, index) => {
+        const itemColor = getResults(item.result).color;
+        const active = activeColor === itemColor;
+        return (
+          <div
+            key={index}
+            className={cx('results-table__item', {
+              [`results-table__item--${itemColor}`]: itemColor,
+              'results-table__item--active': active,
+            })}
+          >
+            {' '}
+            <Row>
+              <Column grow>
+                <Text text={item.text} cases="uppercase" color="dark-blue" />
+              </Column>
+              <Column shrink>
+                <Text text={item.range} color="dark-blue" weight="bold" />
+              </Column>
+            </Row>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 export default ResultsTable;

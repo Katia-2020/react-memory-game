@@ -6,22 +6,6 @@ import { getResults } from '../utilities/results.utilities';
 const Score = (props) => {
   const { score } = props;
 
-  // const getColor = () => {
-  //   if (score < 15) {
-  //     return 'light-green';
-  //   }
-
-  //   if (score >= 15 && score < 30) {
-  //     return 'light-yellow';
-  //   }
-
-  //   if (score >= 30 && score <= 45) {
-  //     return 'light-pink';
-  //   }
-
-  //   return 'light-purple';
-  // }
-
   return (
     <div className={styles['score']}>
       <div className={styles['score__header']}>

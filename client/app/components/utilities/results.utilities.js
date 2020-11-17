@@ -25,3 +25,26 @@ export const getResults = (score) => {
     color: 'light-purple',
   };
 };
+
+export const resultsArray = [
+  {
+    result: 5,
+    text: 'amazing memory!',
+    range: '10-17',
+  },
+  {
+    result: 20,
+    text: "no worries, that's still good enough",
+    range: '18-29',
+  },
+  {
+    result: 40,
+    text: 'you really need to improve',
+    range: '30-45',
+  },
+  {
+    result: 70,
+    text: 'memory?! what memory?',
+    range: '46 +',
+  },
+];

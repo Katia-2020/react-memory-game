@@ -2,37 +2,14 @@ import React from 'react';
 import classnames from 'classnames/bind';
 import styles from './results-table.scss';
 import Text from '../text';
-import { getResults } from '../utilities/results.utilities';
+import { getResults, resultsArray } from '../utilities/results.utilities';
 import { Column, Row } from '../grid';
 
 const cx = classnames.bind(styles);
 
-const arr = [
-  {
-    result: 5,
-    text: 'amazing memory!',
-    range: '10-17',
-  },
-  {
-    result: 20,
-    text: "no worries, that's still good enough",
-    range: '18-29',
-  },
-  {
-    result: 40,
-    text: 'you really need to improve',
-    range: '30-45',
-  },
-  {
-    result: 70,
-    text: 'memory?! what memory?',
-    range: '46 +',
-  },
-];
-
 const ResultsTable = () => (
   <div className={styles['results-table']}>
-    {arr.map((item, index) => (
+    {resultsArray.map((item, index) => (
       <div
         key={index}
         className={cx('results-table__item', {

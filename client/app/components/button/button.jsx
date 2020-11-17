@@ -11,7 +11,7 @@ const Button = (props) => {
 
   return (
     <div className={styles.button} onClick={handleClick}>
-      <Text text={text} size="large" cases="uppercase" color="white" center-absolute />
+      <Text text={text} size="large" cases="uppercase" color="white" absolute />
     </div>
   );
 };

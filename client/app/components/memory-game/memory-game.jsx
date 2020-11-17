@@ -45,13 +45,7 @@ class MemoryGame extends React.Component {
   }
 
   componentWillUnmount() {
-    const { allImages, foundImages } = this.state;
-
-    this.stopTimer();
-
-    if (foundImages.length === (allImages.length / 2)) {
-      this.shuffleCards();
-    }
+    clearInterval(this.interval);
   }
 
   getCardContent(item) {
@@ -72,10 +66,6 @@ class MemoryGame extends React.Component {
         count: this.state.count + 1,
       });
     }, 1000);
-  }
-
-  stopTimer() {
-    clearInterval(this.interval);
   }
 
   handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard) {
@@ -124,18 +114,7 @@ class MemoryGame extends React.Component {
       return;
     }
 
-    // no cards were open, opening the first card
-    if (!currentCard.name) {
-      this.setState({
-        currentCard: {
-          id,
-          name,
-        },
-        gameStarted: true,
-        matchingCard: '',
-      });
-    }
-
+    // start of the game: no cards were open, opening the first card
     if (!currentCard.name && !gameStarted) {
       this.setState({
         currentCard: {
@@ -147,6 +126,17 @@ class MemoryGame extends React.Component {
       });
 
       this.startTimer();
+    }
+
+    // no cards were open, opening the first card
+    if (!currentCard.name && gameStarted) {
+      this.setState({
+        currentCard: {
+          id,
+          name,
+        },
+        matchingCard: '',
+      });
     }
 
     // opening the second card, cards are not matching
@@ -192,6 +182,7 @@ class MemoryGame extends React.Component {
   }
 
   handlePlayButtonClick() {
+    clearInterval(this.interval);
     this.shuffleCards();
   }
 
@@ -224,6 +215,23 @@ class MemoryGame extends React.Component {
     );
   }
 
+  createGame(gameEnd) {
+    const { allImages, score, count } = this.state;
+
+    if (gameEnd) {
+      clearInterval(this.interval);
+      return (
+        <Banner score={score} count={count} />
+      );
+    }
+
+    return (
+      <Row>
+        {allImages.map(item => this.createCards(item))}
+      </Row>
+    );
+  }
+
   render() {
     console.log(this.state);
 
@@ -251,11 +259,7 @@ class MemoryGame extends React.Component {
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
-              {!gameEnd ? (
-                <Row>
-                  {allImages.map(item => this.createCards(item))}
-                </Row>
-              ) : (<Banner score={score} count={count} />)}
+              {this.createGame(gameEnd)}
             </div>
           </Column>
           <Column>

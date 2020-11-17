@@ -2,56 +2,21 @@ import React from 'react';
 import classnames from 'classnames/bind';
 import styles from './banner.scss';
 import Text from '../text';
+import { getResults } from '../utilities/results.utilities';
 
 const cx = classnames.bind(styles);
 
 const Banner = (props) => {
-  const { attempts } = props;
-
-  const getResults = () => {
-    let result = {};
-
-    switch (attempts) {
-      case (attempts < 15): result = {
-        feedback: 'well done!',
-        color: 'light-green',
-      };
-
-        break;
-
-      case (attempts >= 15 && attempts < 30): result = {
-        feedback: 'good!',
-        color: 'light-yellow',
-      };
-
-        break;
-
-      case (attempts >= 30 && attempts <= 45): result = {
-        feedback: 'not too bad!',
-        color: 'light-pink',
-      };
-
-        break;
-
-      default: result = {
-        feedback: 'another try?',
-        color: 'light-purple',
-      };
-
-        break;
-    }
-
-    return result;
-  };
+  const { score } = props;
 
   return (
     <div className={styles.banner}>
-      <Text text={getResults().feedback} center size="large" cases="uppercase" color="dark-blue" />
+      <Text text={getResults(score).feedback} center size="large" cases="uppercase" color="dark-blue" />
       <div className={cx('banner__item', {
-        [`banner__item--${getResults().color}`]: getResults().color,
+        [`banner__item--${getResults(score).color}`]: getResults(score).color,
       })}
       >
-        <Text text={`Your result is ${attempts}`} center size="medium" color="dark-blue" />
+        <Text text={`Your result is ${score}`} center size="medium" color="dark-blue" />
       </div>
     </div>
   );

@@ -1,0 +1,30 @@
+.levels {
+  background-color: rgb(247, 247, 255);
+  border-radius: 15px;
+  margin: auto;
+  width: 300px;
+
+  > * {
+    margin: 50px auto;
+  }
+
+  &__item {
+  }
+
+  &__button {
+    padding: 10px 30px;
+    border-radius: 15px;
+  }
+
+  &__button--easy {
+    box-shadow: 0 0 30px rgba(125, 255, 92, 0.7);
+  }
+
+  &__button--medium {
+    box-shadow: 0 0 30px rgba(255, 252, 92, 0.9);
+  }
+
+  &__button--hard {
+    box-shadow: 0 0 30px rgba(255, 103, 92, 0.6);
+  }
+}

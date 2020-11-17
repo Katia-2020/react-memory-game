@@ -1,0 +1,28 @@
+.banner {
+  background-color: rgb(247, 247, 255);
+  width: 525px;
+  border-radius: 15px;
+  margin: auto;
+
+  &__item {
+    padding: 10px;
+    border-radius: 15px;
+
+    &--light-green {
+      background-color: rgb(124, 255, 92);
+    }
+
+    &--light-yellow {
+      background-color: rgb(255, 243, 73);
+    }
+
+    &--light-pink {
+      background-color: rgb(238, 133, 125);
+    }
+
+    &--light-purple {
+      background-color: rgb(198, 75, 255);
+    }
+  }
+
+}

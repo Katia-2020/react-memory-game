@@ -6,6 +6,7 @@ import Result from '../result';
 import Score from '../score';
 import GameName from '../game-name';
 import Banner from '../banner';
+import Timer from '../timer';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
@@ -25,6 +26,7 @@ const defaultState = {
   score: 0,
   blocked: false,
   matchingCard: '',
+  count: 0,
 };
 
 class MemoryGame extends React.Component {
@@ -39,10 +41,17 @@ class MemoryGame extends React.Component {
 
   componentDidMount() {
     this.shuffleCards();
+
+    this.interval = setInterval(() => {
+      this.setState({
+        count: this.state.count + 1,
+      });
+    }, 1000);
   }
 
   componentWillUnmount() {
     const { allImages, foundImages } = this.state;
+    clearInterval(this.interval);
 
     if (foundImages.length === (allImages.length / 2)) {
       this.shuffleCards();
@@ -203,6 +212,7 @@ class MemoryGame extends React.Component {
       score,
       gameStarted,
       matchingCard,
+      count,
     } = this.state;
 
     const maxMatched = allImages.length / 2;
@@ -223,16 +233,13 @@ class MemoryGame extends React.Component {
                 <Row>
                   {allImages.map(item => this.createCards(item))}
                 </Row>
-              ) :
-                (
-                  <Banner score={score} />
-                )}
-
+              ) : (<Banner score={score} />)}
             </div>
           </Column>
           <Column>
             <Result result={`${matched}/${maxMatched}`} active={matchingCard} />
             <Score score={score} />
+            <Timer count={count} />
           </Column>
         </Row>
       </div>

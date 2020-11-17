@@ -37,21 +37,17 @@ class MemoryGame extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
+    this.startTimer = this.startTimer.bind(this);
   }
 
   componentDidMount() {
     this.shuffleCards();
-
-    this.interval = setInterval(() => {
-      this.setState({
-        count: this.state.count + 1,
-      });
-    }, 1000);
   }
 
   componentWillUnmount() {
     const { allImages, foundImages } = this.state;
-    clearInterval(this.interval);
+
+    this.stopTimer();
 
     if (foundImages.length === (allImages.length / 2)) {
       this.shuffleCards();
@@ -68,6 +64,18 @@ class MemoryGame extends React.Component {
     }
 
     return '';
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      this.setState({
+        count: this.state.count + 1,
+      });
+    }, 1000);
+  }
+
+  stopTimer() {
+    clearInterval(this.interval);
   }
 
   handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard) {
@@ -104,6 +112,7 @@ class MemoryGame extends React.Component {
       matched,
       score,
       blocked,
+      gameStarted,
     } = this.state;
 
     const alreadyFound = this.isFoundCard(name);
@@ -125,6 +134,19 @@ class MemoryGame extends React.Component {
         gameStarted: true,
         matchingCard: '',
       });
+    }
+
+    if (!currentCard.name && !gameStarted) {
+      this.setState({
+        currentCard: {
+          id,
+          name,
+        },
+        gameStarted: true,
+        matchingCard: '',
+      });
+
+      this.startTimer();
     }
 
     // opening the second card, cards are not matching
@@ -233,7 +255,7 @@ class MemoryGame extends React.Component {
                 <Row>
                   {allImages.map(item => this.createCards(item))}
                 </Row>
-              ) : (<Banner score={score} />)}
+              ) : (<Banner score={score} count={count} />)}
             </div>
           </Column>
           <Column>

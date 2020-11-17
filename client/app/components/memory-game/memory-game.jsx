@@ -7,6 +7,7 @@ import Score from '../score';
 import GameName from '../game-name';
 import Banner from '../banner';
 import Timer from '../timer';
+import Levels from '../levels';
 import images from './memory-game.mock';
 import styles from './memory-game.scss';
 
@@ -215,8 +216,14 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGame(gameEnd) {
+  createGame(gameStarted, gameEnd) {
     const { allImages, score, count } = this.state;
+
+    if (!gameStarted && !gameEnd) {
+      return (
+        <Levels />
+      );
+    }
 
     if (gameEnd) {
       clearInterval(this.interval);
@@ -259,7 +266,7 @@ class MemoryGame extends React.Component {
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
-              {this.createGame(gameEnd)}
+              {this.createGame(gameStarted, gameEnd)}
             </div>
           </Column>
           <Column>

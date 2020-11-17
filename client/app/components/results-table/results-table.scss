@@ -1,6 +1,6 @@
 .results-table {
   &__item {
-    margin: 15px auto;
+    margin: 15px 20px;
     padding: 20px;
     border-radius: 7px;
 
@@ -18,6 +18,22 @@
 
     &--light-purple {
       background-color: rgb(198, 75, 255);
+    }
+
+    &--active {
+      animation-name: result;
+      animation-duration: 1000ms;
+      animation-fill-mode: forwards;
+
+      @keyframes result {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.07);
+        }
+      }
+
     }
   }
 }

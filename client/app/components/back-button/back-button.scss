@@ -1,0 +1,16 @@
+.back-button {
+  display: block;
+  width: 170px;
+  height: 70px;
+  cursor: pointer;
+  background-color: rgb(122, 146, 170);
+  box-shadow: 0 0 20px rgba(67, 82, 97, 0.568);
+  border-radius: 10px;
+  position: relative;
+
+  &:active {
+    transform: scale(0.9);
+    transition: transform 400ms;
+    box-shadow: 5px 5px 30px rgba(32, 51, 73, 0.829);
+  }
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import Text from '../text';
-import styles from './button.scss';
+import styles from './start-button.scss';
 
-const Button = (props) => {
+const StartButton = (props) => {
   const { text, onClick } = props;
 
   const handleClick = () => {
@@ -10,10 +10,10 @@ const Button = (props) => {
   };
 
   return (
-    <div className={styles.button} onClick={handleClick}>
+    <div className={styles['start-button']} onClick={handleClick}>
       <Text text={text} size="large" cases="uppercase" color="white" absolute />
     </div>
   );
 };
 
-export default Button;
+export default StartButton;

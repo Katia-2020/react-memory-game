@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Column } from '../grid';
 import Card from '../card';
-import Button from '../button';
+import StartButton from '../start-button';
 import Result from '../result';
 import Score from '../score';
 import GameName from '../game-name';
@@ -9,6 +9,7 @@ import Banner from '../banner';
 import Timer from '../timer';
 import Levels from '../levels';
 import images from './memory-game.mock';
+import { levels } from '../utilities/levels.utilities';
 import styles from './memory-game.scss';
 
 const defaultState = {
@@ -38,7 +39,7 @@ class MemoryGame extends React.Component {
     this.state = defaultState;
 
     this.handleClick = this.handleClick.bind(this);
-    this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
+    this.handleStartButtonClick = this.handleStartButtonClick.bind(this);
     this.handleLevelsClick = this.handleLevelsClick.bind(this);
     this.startTimer = this.startTimer.bind(this);
   }
@@ -184,14 +185,14 @@ class MemoryGame extends React.Component {
     }
   }
 
-  handlePlayButtonClick() {
+  handleStartButtonClick() {
     clearInterval(this.interval);
     this.shuffleCards();
   }
 
-  handleLevelsClick(buttonClicked) {
+  handleLevelsClick(level) {
     this.setState({
-      level: buttonClicked,
+      level,
     });
   }
 
@@ -232,9 +233,9 @@ class MemoryGame extends React.Component {
     }
 
     return (
-      <Button
+      <StartButton
         text={isNewGame}
-        onClick={this.handlePlayButtonClick}
+        onClick={this.handleStartButtonClick}
       />
     );
   }
@@ -244,7 +245,7 @@ class MemoryGame extends React.Component {
 
     if (!gameStarted && !gameEnd) {
       return (
-        <Levels onClick={this.handleLevelsClick} />
+        <Levels onClick={this.handleLevelsClick} levels={levels} />
       );
     }
 

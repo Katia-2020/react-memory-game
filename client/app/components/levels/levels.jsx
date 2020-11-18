@@ -1,13 +1,12 @@
 import React from 'react';
 import classnames from 'classnames/bind';
 import styles from './levels.scss';
-import { levels } from '../utilities/levels.utilities';
 import Text from '../text';
 
 const cx = classnames.bind(styles);
 
 const Levels = (props) => {
-  const { onClick } = props;
+  const { levels, onClick } = props;
 
   const handleClick = () => {
     onClick();
@@ -19,7 +18,7 @@ const Levels = (props) => {
         <div key={level.id} className={styles['levels__item']}>
           <div
             className={cx('levels__button', {
-              [`levels__button--${level.name}`]: level,
+              [`levels__button--${level.name}`]: level.name,
             })}
             onClick={handleClick}
           >

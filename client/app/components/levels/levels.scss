@@ -7,25 +7,4 @@
   > * {
     margin: 50px auto;
   }
-
-  &__item {
-  }
-
-  &__button {
-    padding: 10px 30px;
-    border-radius: 15px;
-    cursor: pointer;
-  }
-
-  &__button--easy {
-    box-shadow: 0 0 30px rgb(125, 255, 92);
-  }
-
-  &__button--medium {
-    box-shadow: 0 0 30px rgb(250, 247, 75);
-  }
-
-  &__button--hard {
-    box-shadow: 0 0 30px rgb(255, 103, 92);
-  }
 }

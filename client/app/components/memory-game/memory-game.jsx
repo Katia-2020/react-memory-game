@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Column } from '../grid';
 import Card from '../card';
 import StartButton from '../start-button';
+import BackButton from '../back-button';
 import Result from '../result';
 import Score from '../score';
 import GameName from '../game-name';
@@ -193,6 +194,7 @@ class MemoryGame extends React.Component {
   handleLevelsClick(level) {
     this.setState({
       level,
+      gameStarted: true,
     });
   }
 
@@ -225,7 +227,7 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGameHeader(gameStarted, gameEnd, isNewGame) {
+  createGameControls(gameStarted, gameEnd, isNewGame) {
     if (!gameStarted && !gameEnd) {
       return (
         <GameName />
@@ -233,10 +235,13 @@ class MemoryGame extends React.Component {
     }
 
     return (
-      <StartButton
-        text={isNewGame}
-        onClick={this.handleStartButtonClick}
-      />
+      <div className={styles['memory-game__controls']}>
+        <StartButton
+          text={isNewGame}
+          onClick={this.handleStartButtonClick}
+        />
+        <BackButton onClick={this.handleBackButtonClick} />
+      </div>
     );
   }
 
@@ -266,7 +271,7 @@ class MemoryGame extends React.Component {
   createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count) {
     if (gameStarted) {
       return (
-        <div>
+        <div className={styles['memory-game__results']}>
           <Result result={`${matched}/${maxMatched}`} active={matchingCard} />
           <Score score={score} />
           <Timer count={count} />
@@ -298,7 +303,7 @@ class MemoryGame extends React.Component {
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            {this.createGameHeader(gameStarted, gameEnd, isNewGame)}
+            {this.createGameControls(gameStarted, gameEnd, isNewGame)}
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>

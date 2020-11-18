@@ -3,7 +3,7 @@ import Text from '../text';
 import styles from './back-button.scss';
 
 const BackButton = (props) => {
-  const { onClick } = props;
+  const { text, onClick } = props;
 
   const handleClick = () => {
     onClick();
@@ -11,7 +11,7 @@ const BackButton = (props) => {
 
   return (
     <div className={styles['back-button']} onClick={handleClick}>
-      <Text text="go back" weight="bold" cases="uppercase" color="dark-blue" absolute />
+      <Text text={text} weight="bold" size="medium" cases="uppercase" color="dark-blue" absolute />
     </div>
   );
 };

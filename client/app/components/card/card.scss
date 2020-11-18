@@ -1,6 +1,4 @@
 .card {
-  width: 100px;
-  height: 100px;
   cursor: pointer;
   background-color: rgb(73, 88, 103);
   border-radius: 15px;
@@ -33,6 +31,20 @@
     }
   }
 
+  &--big {
+    width: 110px;
+    height: 110px;
+  }
+
+  &--medium {
+    width: 100px;
+    height: 100px;
+  }
+
+  &--small {
+    width: 90px;
+    height: 90px;
+  }
 
   &:active {
     transform: scale(0.85);

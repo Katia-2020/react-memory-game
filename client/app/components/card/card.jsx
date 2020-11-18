@@ -10,6 +10,7 @@ const Card = (props) => {
   const {
     id,
     name,
+    size,
     onClick,
     content,
     active,
@@ -23,6 +24,7 @@ const Card = (props) => {
     <div
       className={cx('card', {
         'card--active': active,
+        [`card--${size}`]: size,
       })}
       onClick={handleClick}
     >

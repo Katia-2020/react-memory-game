@@ -223,25 +223,35 @@ class MemoryGame extends React.Component {
   }
 
   shuffleArray(level) {
-    if (level === 'easy') {
-      return imagesEasy.sort(() => Math.random() - 0.5);
+    let range = [];
+
+    switch (level) {
+      case 'easy': range = imagesEasy; break;
+      case 'medium': range = imagesMedium; break;
+      default: range = imagesHard; break;
     }
 
-    if (level === 'medium') {
-      return imagesMedium.sort(() => Math.random() - 0.5);
-    }
-
-    return imagesHard.sort(() => Math.random() - 0.5);
+    return range.sort(() => Math.random() - 0.5);
   }
 
   createCards(item) {
-    const { matchingCard } = this.state;
+    const { matchingCard, level } = this.state;
+
+    let size = '';
+
+    switch (level) {
+      case 'easy': size = 'big'; break;
+      case 'medium': size = 'medium'; break;
+      default: size = 'small'; break;
+    }
+
     return (
       <Column key={item.id}>
         <div className={styles['memory-game__item']}>
           <Card
             id={item.id}
             name={item.name}
+            size={size}
             onClick={this.handleClick}
             content={this.getCardContent(item)}
             active={matchingCard === item.name}

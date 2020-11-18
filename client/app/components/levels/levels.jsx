@@ -7,9 +7,9 @@ const Levels = (props) => {
 
   return (
     <div className={styles.levels}>
-      {levels.map(level => (
+      {levels.map((level, index) => (
         <LevelButton
-          key={level.id}
+          key={index}
           onClick={onClick}
           level={level}
         />

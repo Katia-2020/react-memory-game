@@ -243,7 +243,8 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGameControls(gameEnd, isNewGame, level, allImages) {
+  createGameControls(gameEnd, isNewGame) {
+    const { level, allImages } = this.state;
      if (gameEnd && allImages.length) {
       return (
         <div className={styles['memory-game__controls']}>
@@ -275,8 +276,8 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGameBody(gameStarted, gameEnd, level) {
-    const { allImages, score, count } = this.state;
+  createGameBody(gameStarted, gameEnd) {
+    const { allImages, score, count, level } = this.state;
 
     if (!gameStarted && !level) {
       return (
@@ -298,7 +299,9 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGameResults(matched, maxMatched, matchingCard, score, count, level) {
+  createGameResults(maxMatched) {
+    const { matched, matchingCard, score, count, level } = this.state;
+
     if (level) {
       return (
         <div className={styles['memory-game__results']}>
@@ -318,12 +321,7 @@ class MemoryGame extends React.Component {
     const {
       allImages,
       foundImages,
-      matched,
-      score,
       gameStarted,
-      matchingCard,
-      count,
-      level,
     } = this.state;
 
     const maxMatched = allImages.length / 2;
@@ -334,15 +332,15 @@ class MemoryGame extends React.Component {
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            {this.createGameControls(gameEnd, isNewGame, level, allImages)}
+            {this.createGameControls(gameEnd, isNewGame)}
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
-              {this.createGameBody(gameStarted, gameEnd, level)}
+              {this.createGameBody(gameStarted, gameEnd)}
             </div>
           </Column>
           <Column>
-            {this.createGameResults(matched, maxMatched, matchingCard, score, count, level)}
+            {this.createGameResults(maxMatched)}
           </Column>
         </Row>
       </div>
@@ -352,5 +350,4 @@ class MemoryGame extends React.Component {
 
 export default MemoryGame;
 
-// in createGameResults Im passing arguments but they can also be accessed from state. What's the best option?
-// how to pass many args: as an object?
+

@@ -6,27 +6,28 @@ import Text from '../text';
 
 const cx = classnames.bind(styles);
 
-const Levels = () => {
+const Levels = (props) => {
+  const { onClick } = props;
 
   const handleClick = () => {
     onClick();
   };
 
   return (
-  <div className={styles.levels}>
-    {levels.map((level, index) => (
-      <div key={index} className={styles['levels__item']}>
-        <div
-          className={cx('levels__button', {
-            [`levels__button--${level}`]: level,
-          })}
-          onClick={handleClick}
-        >
-        <Text text={level} center size="medium" cases="uppercase" weight="bold" color="dark-blue" />
+    <div className={styles.levels}>
+      {levels.map(level => (
+        <div key={level.id} className={styles['levels__item']}>
+          <div
+            className={cx('levels__button', {
+              [`levels__button--${level.name}`]: level,
+            })}
+            onClick={handleClick}
+          >
+            <Text text={level.name} center size="medium" cases="uppercase" weight="bold" color="dark-blue" />
+          </div>
         </div>
-      </div>
-    ))}
-  </div>
+      ))}
+    </div>
   );
 };
 

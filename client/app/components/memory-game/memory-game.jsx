@@ -28,6 +28,7 @@ const defaultState = {
   blocked: false,
   matchingCard: '',
   count: 0,
+  level: '',
 };
 
 class MemoryGame extends React.Component {
@@ -38,6 +39,7 @@ class MemoryGame extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
+    this.handleLevelsClick = this.handleLevelsClick.bind(this);
     this.startTimer = this.startTimer.bind(this);
   }
 
@@ -187,6 +189,12 @@ class MemoryGame extends React.Component {
     this.shuffleCards();
   }
 
+  handleLevelsClick(buttonClicked) {
+    this.setState({
+      level: buttonClicked,
+    });
+  }
+
   isFoundCard(name) {
     const { foundImages } = this.state;
     return foundImages.includes(name);
@@ -216,12 +224,27 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGame(gameStarted, gameEnd) {
+  createGameHeader(gameStarted, gameEnd, isNewGame) {
+    if (!gameStarted && !gameEnd) {
+      return (
+        <GameName />
+      );
+    }
+
+    return (
+      <Button
+        text={isNewGame}
+        onClick={this.handlePlayButtonClick}
+      />
+    );
+  }
+
+  createGameBody(gameStarted, gameEnd) {
     const { allImages, score, count } = this.state;
 
     if (!gameStarted && !gameEnd) {
       return (
-        <Levels />
+        <Levels onClick={this.handleLevelsClick} />
       );
     }
 
@@ -237,6 +260,20 @@ class MemoryGame extends React.Component {
         {allImages.map(item => this.createCards(item))}
       </Row>
     );
+  }
+
+  createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count) {
+    if (gameStarted) {
+      return (
+        <div>
+          <Result result={`${matched}/${maxMatched}`} active={matchingCard} />
+          <Score score={score} />
+          <Timer count={count} />
+        </div>
+      );
+    }
+
+    return '';
   }
 
   render() {
@@ -260,19 +297,15 @@ class MemoryGame extends React.Component {
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            {!gameStarted && !gameEnd ?
-              <GameName /> :
-              <Button text={isNewGame} onClick={this.handlePlayButtonClick} />}
+            {this.createGameHeader(gameStarted, gameEnd, isNewGame)}
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
-              {this.createGame(gameStarted, gameEnd)}
+              {this.createGameBody(gameStarted, gameEnd)}
             </div>
           </Column>
           <Column>
-            <Result result={`${matched}/${maxMatched}`} active={matchingCard} />
-            <Score score={score} />
-            <Timer count={count} />
+            {this.createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count)}
           </Column>
         </Row>
       </div>
@@ -281,3 +314,6 @@ class MemoryGame extends React.Component {
 }
 
 export default MemoryGame;
+
+// in createGameResults Im passing arguments but they can also be accessed from state. What's the best option?
+// how to pass many args: as an object?

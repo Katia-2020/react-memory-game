@@ -42,6 +42,7 @@ class MemoryGame extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleStartButtonClick = this.handleStartButtonClick.bind(this);
     this.handleLevelsClick = this.handleLevelsClick.bind(this);
+    this.handleBackButtonClick = this.handleBackButtonClick(this);
     this.startTimer = this.startTimer.bind(this);
   }
 
@@ -108,6 +109,7 @@ class MemoryGame extends React.Component {
       score,
       blocked,
       gameStarted,
+      level,
     } = this.state;
 
     const alreadyFound = this.isFoundCard(name);
@@ -120,7 +122,7 @@ class MemoryGame extends React.Component {
     }
 
     // start of the game: no cards were open, opening the first card
-    if (!currentCard.name && !gameStarted) {
+    if (!currentCard.name && !gameStarted && level) {
       this.setState({
         currentCard: {
           id,
@@ -188,13 +190,33 @@ class MemoryGame extends React.Component {
 
   handleStartButtonClick() {
     clearInterval(this.interval);
-    this.shuffleCards();
+
+    this.setState({
+      allImages: this.shuffleArray(),
+      currentCard: { id: '', name: '' },
+      previousCard: { id: '', name: '' },
+      gameStarted: false,
+      foundImages: [],
+      matched: 0,
+      score: 0,
+      blocked: false,
+      matchingCard: '',
+      count: 0,
+    });
   }
 
   handleLevelsClick(level) {
     this.setState({
+      allImages: this.shuffleArray(),
       level,
-      gameStarted: true,
+    });
+  }
+
+  handleBackButtonClick() {
+    clearInterval(this.interval);
+
+    this.setState({
+      level: '',
     });
   }
 
@@ -208,6 +230,10 @@ class MemoryGame extends React.Component {
       ...defaultState,
       allImages: images.sort(() => Math.random() - 0.5),
     });
+  }
+
+  shuffleArray() {
+    return images.sort(() => Math.random() - 0.5);
   }
 
   createCards(item) {
@@ -227,28 +253,44 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGameControls(gameStarted, gameEnd, isNewGame) {
-    if (!gameStarted && !gameEnd) {
+  createGameControls(gameStarted, gameEnd, isNewGame, level) {
+    if (!gameStarted && !gameEnd && !level) {
       return (
         <GameName />
       );
     }
 
-    return (
-      <div className={styles['memory-game__controls']}>
-        <StartButton
-          text={isNewGame}
-          onClick={this.handleStartButtonClick}
-        />
-        <BackButton onClick={this.handleBackButtonClick} />
-      </div>
-    );
+    if (gameEnd) {
+      return (
+        <div className={styles['memory-game__controls']}>
+          <BackButton
+            text="new game"
+            onClick={this.handleBackButtonClick}
+          />
+        </div>
+      );
+    }
+
+    if (!gameEnd && level) {
+      return (
+        <div className={styles['memory-game__controls']}>
+          <StartButton
+            text={isNewGame}
+            onClick={this.handleStartButtonClick}
+          />
+          <BackButton
+            text="go back"
+            onClick={this.handleBackButtonClick}
+          />
+        </div>
+      );
+    }
   }
 
-  createGameBody(gameStarted, gameEnd) {
+  createGameBody(gameStarted, gameEnd, level) {
     const { allImages, score, count } = this.state;
 
-    if (!gameStarted && !gameEnd) {
+    if (!gameStarted && !gameEnd && !level) {
       return (
         <Levels onClick={this.handleLevelsClick} levels={levels} />
       );
@@ -268,8 +310,8 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count) {
-    if (gameStarted) {
+  createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count, level) {
+    if (level) {
       return (
         <div className={styles['memory-game__results']}>
           <Result result={`${matched}/${maxMatched}`} active={matchingCard} />
@@ -293,25 +335,27 @@ class MemoryGame extends React.Component {
       gameStarted,
       matchingCard,
       count,
+      level,
     } = this.state;
 
     const maxMatched = allImages.length / 2;
     const gameEnd = (maxMatched === foundImages.length);
+    console.log(gameEnd);
     const isNewGame = !gameEnd ? 'start again' : 'start';
 
     return (
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            {this.createGameControls(gameStarted, gameEnd, isNewGame)}
+            {this.createGameControls(gameStarted, gameEnd, isNewGame, level)}
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
-              {this.createGameBody(gameStarted, gameEnd)}
+              {this.createGameBody(gameStarted, gameEnd, level)}
             </div>
           </Column>
           <Column>
-            {this.createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count)}
+            {this.createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count, level)}
           </Column>
         </Row>
       </div>

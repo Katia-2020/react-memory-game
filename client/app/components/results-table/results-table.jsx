@@ -2,18 +2,18 @@ import React from 'react';
 import classnames from 'classnames/bind';
 import styles from './results-table.scss';
 import Text from '../text';
-import { getResults, resultsArray } from '../utilities/results.utilities';
+import { getResults } from '../utilities/results.utilities';
 import { Column, Row } from '../grid';
 
 const cx = classnames.bind(styles);
 
 const ResultsTable = (props) => {
-  const { activeColor } = props;
+  const { activeColor, range, feedbackArray } = props;
 
   return (
     <div className={styles['results-table']}>
-      {resultsArray.map((item, index) => {
-        const itemColor = getResults(item.result).color;
+      {feedbackArray.map((item, index) => {
+        const itemColor = getResults(item.result, range).color;
         const active = activeColor === itemColor;
         return (
           <div

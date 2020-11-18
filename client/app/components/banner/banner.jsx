@@ -3,24 +3,35 @@ import classnames from 'classnames/bind';
 import styles from './banner.scss';
 import Text from '../text';
 import ResultsTable from '../results-table';
-import { getResults } from '../utilities/results.utilities';
+import { getResults, getFeedbackArray } from '../utilities/results.utilities';
+import { rangeEasy, rangeMedium, rangeHard } from '../utilities/ranges.utilities';
 
 const cx = classnames.bind(styles);
 
 const Banner = (props) => {
-  const { score, count } = props;
-  const activeColor = getResults(score).color;
+  const { score, count, level } = props;
+  let range = [];
+
+  switch (level) {
+    case 'easy': range = rangeEasy; break;
+    case 'medium': range = rangeMedium; break;
+    default: range = rangeHard; break;
+  }
+
+  const activeColor = getResults(score, range).color;
+  const feedbackArray = getFeedbackArray(range);
+
 
   return (
     <div className={styles.banner}>
-      <Text text={getResults(score).feedback} center size="large" cases="uppercase" color="dark-blue" />
+      <Text text={getResults(score, range).feedback} center size="large" cases="uppercase" color="dark-blue" />
       <div className={cx('banner__item', {
         [`banner__item--${activeColor}`]: activeColor,
       })}
       >
         <Text text={`Your result is ${score}. Your time is: ${count}s`} center size="medium" weight="bold" color="dark-blue" />
       </div>
-      <ResultsTable activeColor={activeColor} />
+      <ResultsTable activeColor={activeColor} range={range} feedbackArray={feedbackArray}  />
     </div>
   );
 };

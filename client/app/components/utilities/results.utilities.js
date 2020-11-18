@@ -1,21 +1,19 @@
-import { ranges } from './ranges.utilities';
-
-export const getResults = (score) => {
-  if (score <= ranges[0].max) {
+export const getResults = (score, range) => {
+  if (score <= range[0].max) {
     return {
       feedback: 'well done!',
       color: 'light-green',
     };
   }
 
-  if (score > ranges[1].min && score <= ranges[1].max) {
+  if (score > range[1].min && score <= range[1].max) {
     return {
       feedback: 'good!',
       color: 'light-yellow',
     };
   }
 
-  if (score > ranges[2].min && score <= ranges[2].max) {
+  if (score > range[2].min && score <= range[2].max) {
     return {
       feedback: 'not too bad!',
       color: 'light-pink',
@@ -28,25 +26,27 @@ export const getResults = (score) => {
   };
 };
 
-export const resultsArray = [
+export const getFeedbackArray = (range) => [
   {
-    result: ranges[0].max,
+    result: range[0].max,
     text: 'amazing memory!',
-    range: `${ranges[0].min} - ${ranges[0].max}`,
+    range: `${range[0].min} - ${range[0].max}`,
   },
   {
-    result: ranges[1].max,
+    result: range[1].max,
     text: "no worries, that's still good enough",
-    range: `${ranges[1].min} - ${ranges[1].max}`,
+    range: `${range[1].min} - ${range[1].max}`,
   },
   {
-    result: ranges[2].max,
+    result: range[2].max,
     text: 'you really need to improve',
-    range: `${ranges[2].min} - ${ranges[2].max}`,
+    range: `${range[2].min} - ${range[2].max}`,
   },
   {
-    result: ranges[3].max,
+    result: range[3].max,
     text: 'memory?! what memory?',
-    range: `${ranges[3].min} +`,
+    range: `${range[3].min} +`,
   },
 ];
+
+

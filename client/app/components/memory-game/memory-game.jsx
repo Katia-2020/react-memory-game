@@ -47,7 +47,9 @@ class MemoryGame extends React.Component {
   }
 
   componentDidMount() {
-    this.shuffleCards();
+    this.setState({
+      ...defaultState,
+    });
   }
 
   componentWillUnmount() {
@@ -189,68 +191,35 @@ class MemoryGame extends React.Component {
   }
 
   handleStartButtonClick() {
+    const { level } = this.state;
     clearInterval(this.interval);
 
     this.setState({
+      ...defaultState,
       allImages: this.shuffleArray(),
-      currentCard: { id: '', name: '' },
-      previousCard: { id: '', name: '' },
-      gameStarted: false,
-      foundImages: [],
-      matched: 0,
-      score: 0,
-      blocked: false,
-      matchingCard: '',
-      count: 0,
+      level,
     });
   }
 
   handleLevelsClick(level) {
     this.setState({
+      ...defaultState,
       allImages: this.shuffleArray(),
-      currentCard: { id: '', name: '' },
-      previousCard: { id: '', name: '' },
-      gameStarted: false,
-      foundImages: [],
-      matched: 0,
-      score: 0,
-      blocked: false,
-      matchingCard: '',
-      count: 0,
       level,
     });
   }
 
   handleBackButtonClick() {
-    const {allImages, foundImages} = this.state;
     clearInterval(this.interval);
-    let newState = {};
 
-    if ((allImages.length / 2) === foundImages.length) {
-      newState = {
-        ...defaultState,
-      };
-    } else {
-      newState = {
-        level: '',
-        gameStarted: '',
-      };
-    }
-
-    console.log(newState);
-    this.setState(newState);
+    this.setState({
+      ...defaultState,
+    });
   }
 
   isFoundCard(name) {
     const { foundImages } = this.state;
     return foundImages.includes(name);
-  }
-
-  shuffleCards() {
-    this.setState({
-      ...defaultState,
-      allImages: images.sort(() => Math.random() - 0.5),
-    });
   }
 
   shuffleArray() {

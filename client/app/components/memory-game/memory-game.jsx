@@ -349,5 +349,3 @@ class MemoryGame extends React.Component {
 }
 
 export default MemoryGame;
-
-

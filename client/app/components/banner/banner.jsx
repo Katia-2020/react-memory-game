@@ -18,7 +18,7 @@ const Banner = (props) => {
         [`banner__item--${activeColor}`]: activeColor,
       })}
       >
-        <Text text={`Your result is ${score}. Your time: ${count}`} center size="medium" weight="bold" color="dark-blue" />
+        <Text text={`Your result is ${score}. Your time is: ${count}s`} center size="medium" weight="bold" color="dark-blue" />
       </div>
       <ResultsTable activeColor={activeColor} />
     </div>

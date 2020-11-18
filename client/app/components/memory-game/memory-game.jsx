@@ -42,7 +42,7 @@ class MemoryGame extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleStartButtonClick = this.handleStartButtonClick.bind(this);
     this.handleLevelsClick = this.handleLevelsClick.bind(this);
-    this.handleBackButtonClick = this.handleBackButtonClick(this);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.startTimer = this.startTimer.bind(this);
   }
 
@@ -208,16 +208,37 @@ class MemoryGame extends React.Component {
   handleLevelsClick(level) {
     this.setState({
       allImages: this.shuffleArray(),
+      currentCard: { id: '', name: '' },
+      previousCard: { id: '', name: '' },
+      gameStarted: false,
+      foundImages: [],
+      matched: 0,
+      score: 0,
+      blocked: false,
+      matchingCard: '',
+      count: 0,
       level,
     });
   }
 
   handleBackButtonClick() {
+    const {allImages, foundImages} = this.state;
     clearInterval(this.interval);
+    let newState = {};
 
-    this.setState({
-      level: '',
-    });
+    if ((allImages.length / 2) === foundImages.length) {
+      newState = {
+        ...defaultState,
+      };
+    } else {
+      newState = {
+        level: '',
+        gameStarted: '',
+      };
+    }
+
+    console.log(newState);
+    this.setState(newState);
   }
 
   isFoundCard(name) {
@@ -253,14 +274,8 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGameControls(gameStarted, gameEnd, isNewGame, level) {
-    if (!gameStarted && !gameEnd && !level) {
-      return (
-        <GameName />
-      );
-    }
-
-    if (gameEnd) {
+  createGameControls(gameEnd, isNewGame, level, allImages) {
+     if (gameEnd && allImages.length) {
       return (
         <div className={styles['memory-game__controls']}>
           <BackButton
@@ -285,18 +300,22 @@ class MemoryGame extends React.Component {
         </div>
       );
     }
+
+    return (
+      <GameName />
+    );
   }
 
   createGameBody(gameStarted, gameEnd, level) {
     const { allImages, score, count } = this.state;
 
-    if (!gameStarted && !gameEnd && !level) {
+    if (!gameStarted && !level) {
       return (
         <Levels onClick={this.handleLevelsClick} levels={levels} />
       );
     }
 
-    if (gameEnd) {
+    if (gameEnd && allImages.length) {
       clearInterval(this.interval);
       return (
         <Banner score={score} count={count} />
@@ -310,7 +329,7 @@ class MemoryGame extends React.Component {
     );
   }
 
-  createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count, level) {
+  createGameResults(matched, maxMatched, matchingCard, score, count, level) {
     if (level) {
       return (
         <div className={styles['memory-game__results']}>
@@ -340,14 +359,13 @@ class MemoryGame extends React.Component {
 
     const maxMatched = allImages.length / 2;
     const gameEnd = (maxMatched === foundImages.length);
-    console.log(gameEnd);
     const isNewGame = !gameEnd ? 'start again' : 'start';
 
     return (
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            {this.createGameControls(gameStarted, gameEnd, isNewGame, level)}
+            {this.createGameControls(gameEnd, isNewGame, level, allImages)}
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>
@@ -355,7 +373,7 @@ class MemoryGame extends React.Component {
             </div>
           </Column>
           <Column>
-            {this.createGameResults(gameStarted, matched, maxMatched, matchingCard, score, count, level)}
+            {this.createGameResults(matched, maxMatched, matchingCard, score, count, level)}
           </Column>
         </Row>
       </div>

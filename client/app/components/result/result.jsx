@@ -11,7 +11,8 @@ const Result = (props) => {
   return (
     <div className={cx('result', {
       'result--active': active,
-    })}>
+    })}
+    >
       <div className={styles['result__header']}>
         <Text text="matched:" cases="uppercase" color="dark-blue" weight="bold" />
       </div>

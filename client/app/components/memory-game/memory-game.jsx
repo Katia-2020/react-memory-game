@@ -123,7 +123,7 @@ class MemoryGame extends React.Component {
       return;
     }
 
-    // start of the game: no cards were open, opening the first card
+    // start of the game: no cards are open, opening the first card
     if (!currentCard.name && !gameStarted && level) {
       this.setState({
         currentCard: {
@@ -137,7 +137,7 @@ class MemoryGame extends React.Component {
       this.startTimer();
     }
 
-    // no cards were open, opening the first card
+    // some matching cards are found and open, opening the first card of the pair
     if (!currentCard.name && gameStarted) {
       this.setState({
         currentCard: {
@@ -148,7 +148,7 @@ class MemoryGame extends React.Component {
       });
     }
 
-    // opening the second card, cards are not matching
+    // opening the second card of the pair, cards are not matching
     if (name !== currentCard.name && currentCard.name && !previousCard.name) {
       const updatedCurrentCard = {
         id,

@@ -4,19 +4,14 @@ import styles from './banner.scss';
 import Text from '../text';
 import ResultsTable from '../results-table';
 import { getResults, getFeedbackArray } from '../utilities/results.utilities';
-import { rangeEasy, rangeMedium, rangeHard } from '../utilities/ranges.utilities';
+import { getScoresRange } from '../utilities/ranges.utilities';
 
 const cx = classnames.bind(styles);
 
 const Banner = (props) => {
-  const { score, level } = props;
-  let range = [];
+  const { score, maxMatched } = props;
 
-  switch (level) {
-    case 'easy': range = rangeEasy; break;
-    case 'medium': range = rangeMedium; break;
-    default: range = rangeHard; break;
-  }
+  const range = getScoresRange(maxMatched);
 
   const activeColor = getResults(score, range).color;
   const feedbackArray = getFeedbackArray(range);

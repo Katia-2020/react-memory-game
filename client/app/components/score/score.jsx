@@ -2,17 +2,12 @@ import React from 'react';
 import Text from '../text';
 import styles from './score.scss';
 import { getResults } from '../utilities/results.utilities';
-import { rangeEasy, rangeMedium, rangeHard } from '../utilities/ranges.utilities';
+import { getScoresRange } from '../utilities/ranges.utilities';
 
 const Score = (props) => {
-  const { score, level } = props;
-  let range;
+  const { score, maxMatched } = props;
 
-  switch (level) {
-    case 'easy': range = rangeEasy; break;
-    case 'medium': range = rangeMedium; break;
-    default: range = rangeHard; break;
-  }
+  const range = getScoresRange(maxMatched);
 
   return (
     <div className={styles['score']}>

@@ -24,13 +24,13 @@ const Banner = (props) => {
 
   return (
     <div className={styles.banner}>
-      <Text text={getResults(score, range).feedback} center size="large" cases="uppercase" color="dark-blue" />
       <div className={cx('banner__item', {
         [`banner__item--${activeColor}`]: activeColor,
       })}
       >
         <Text text={`Your result is ${score}`} center size="medium" weight="bold" color="dark-blue" />
       </div>
+      <Text text={getResults(score, range).feedback} center size="large" cases="uppercase" color="dark-blue" />
       <ResultsTable activeColor={activeColor} range={range} feedbackArray={feedbackArray}  />
     </div>
   );

@@ -269,6 +269,7 @@ class MemoryGame extends React.Component {
         <div className={styles['memory-game__controls']}>
           <BackButton
             text="new game"
+            size="large"
             onClick={this.handleBackButtonClick}
           />
         </div>
@@ -284,6 +285,7 @@ class MemoryGame extends React.Component {
           />
           <BackButton
             text="go back"
+            size="medium"
             onClick={this.handleBackButtonClick}
           />
         </div>

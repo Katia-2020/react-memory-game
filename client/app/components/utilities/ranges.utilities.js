@@ -1,8 +1,8 @@
 const rangeEasy = [
-  { min: 6, max: 10 },
-  { min: 11, max: 16 },
-  { min: 17, max: 25 },
-  { min: 26, max: 100 },
+  { min: 8, max: 19 },
+  { min: 20, max: 31 },
+  { min: 32, max: 41 },
+  { min: 42, max: 400 },
 ];
 
 const rangeMedium = [
@@ -13,10 +13,10 @@ const rangeMedium = [
 ];
 
 const rangeHard = [
-  { min: 10, max: 18 },
-  { min: 17, max: 30 },
-  { min: 30, max: 45 },
-  { min: 46, max: 400 },
+  { min: 15, max: 24 },
+  { min: 25, max: 35 },
+  { min: 36, max: 49 },
+  { min: 50, max: 400 },
 ];
 
 export {

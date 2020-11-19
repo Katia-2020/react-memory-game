@@ -69,9 +69,11 @@ class MemoryGame extends React.Component {
   }
 
   startTimer() {
+    const { count } = this.state;
+
     this.interval = setInterval(() => {
       this.setState({
-        count: this.state.count + 1,
+        count: count + 1,
       });
     }, 1000);
   }
@@ -341,8 +343,7 @@ class MemoryGame extends React.Component {
   }
 
   render() {
-    console.log(this.state);
-
+    // console.log(this.state);
     const {
       allImages,
       foundImages,

@@ -53,7 +53,7 @@ class LevelButton extends React.Component {
         <Text text={level} center size="medium" cases="uppercase" weight="bold" color="dark-blue" />
       </div>
     );
-  };
+  }
 }
 
 export default LevelButton;

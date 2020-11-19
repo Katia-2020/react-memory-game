@@ -15,25 +15,30 @@
     box-shadow: 0 0 40px rgb(221, 84, 74);
   }
 
- &--active {
+  &--active {
     animation-name: move;
     animation-duration: 0.4s;
     @keyframes move {
       0% {
         transform: rotate(0deg);
       }
+
       20% {
         transform: rotate(6deg);
       }
+
       40% {
         transform: rotate(-6deg);
       }
+
       60% {
         transform: rotate(6deg);
       }
+
       80% {
         transform: rotate(-6deg);
       }
+
       100% {
         transform: rotate(0deg);
       }

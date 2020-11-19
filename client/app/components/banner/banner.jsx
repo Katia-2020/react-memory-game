@@ -9,7 +9,7 @@ import { rangeEasy, rangeMedium, rangeHard } from '../utilities/ranges.utilities
 const cx = classnames.bind(styles);
 
 const Banner = (props) => {
-  const { score, count, level } = props;
+  const { score, level } = props;
   let range = [];
 
   switch (level) {
@@ -21,7 +21,6 @@ const Banner = (props) => {
   const activeColor = getResults(score, range).color;
   const feedbackArray = getFeedbackArray(range);
 
-
   return (
     <div className={styles.banner}>
       <div className={cx('banner__item', {
@@ -31,7 +30,7 @@ const Banner = (props) => {
         <Text text={`Your result is ${score}`} center size="medium" weight="bold" color="dark-blue" />
       </div>
       <Text text={getResults(score, range).feedback} center size="large" cases="uppercase" color="dark-blue" />
-      <ResultsTable activeColor={activeColor} range={range} feedbackArray={feedbackArray}  />
+      <ResultsTable activeColor={activeColor} range={range} feedbackArray={feedbackArray} />
     </div>
   );
 };

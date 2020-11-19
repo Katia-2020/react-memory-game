@@ -48,5 +48,3 @@ export const getFeedbackArray = (range) => [
     range: `${range[3].min} +`,
   },
 ];
-
-

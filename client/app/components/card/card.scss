@@ -7,23 +7,23 @@
   box-shadow: 5px 5px 9px rgba(73, 88, 103, 0.692);
 
   &--active {
-    animation-name: shake;
+    animation-name: move;
     animation-duration: 0.4s;
-    @keyframes shake {
+    @keyframes move {
       0% {
         transform: rotate(0deg);
       }
       20% {
-        transform: rotate(5deg);
+        transform: rotate(6deg);
       }
       40% {
-        transform: rotate(-5deg);
+        transform: rotate(-6deg);
       }
       60% {
-        transform: rotate(5deg);
+        transform: rotate(6deg);
       }
       80% {
-        transform: rotate(-5deg);
+        transform: rotate(-6deg);
       }
       100% {
         transform: rotate(0deg);

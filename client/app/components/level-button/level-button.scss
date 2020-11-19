@@ -1,23 +1,48 @@
 .level-button {
-  padding: 10px 30px;
+  padding: 20px 30px;
   border-radius: 15px;
   cursor: pointer;
 
   &--easy {
-    box-shadow: 0 0 30px rgb(112, 255, 77);
+    box-shadow: 0 0 40px rgb(65, 187, 34);
   }
 
   &--medium {
-    box-shadow: 0 0 30px rgb(255, 252, 60);
+    box-shadow: 0 0 45px rgb(202, 199, 3);
   }
 
   &--hard {
-    box-shadow: 0 0 30px rgb(255, 106, 95);
+    box-shadow: 0 0 40px rgb(221, 84, 74);
+  }
+
+ &--active {
+    animation-name: move;
+    animation-duration: 0.4s;
+    @keyframes move {
+      0% {
+        transform: rotate(0deg);
+      }
+      20% {
+        transform: rotate(6deg);
+      }
+      40% {
+        transform: rotate(-6deg);
+      }
+      60% {
+        transform: rotate(6deg);
+      }
+      80% {
+        transform: rotate(-6deg);
+      }
+      100% {
+        transform: rotate(0deg);
+      }
+    }
   }
 
   &:active {
     transform: scale(0.9);
     transition: transform 400ms;
-    // box-shadow: 5px 5px 30px rgba(32, 51, 73, 0.829);
   }
+
 }

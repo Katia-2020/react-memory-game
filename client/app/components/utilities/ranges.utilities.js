@@ -14,8 +14,8 @@ const rangeMedium = [
 
 const rangeHard = [
   { min: 15, max: 24 },
-  { min: 25, max: 35 },
-  { min: 36, max: 49 },
+  { min: 25, max: 36 },
+  { min: 37, max: 49 },
   { min: 50, max: 400 },
 ];
 

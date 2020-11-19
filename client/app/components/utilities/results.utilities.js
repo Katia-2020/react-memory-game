@@ -6,14 +6,14 @@ export const getResults = (score, range) => {
     };
   }
 
-  if (score > range[1].min && score <= range[1].max) {
+  if (score >= range[1].min && score <= range[1].max) {
     return {
       feedback: 'good!',
       color: 'light-yellow',
     };
   }
 
-  if (score > range[2].min && score <= range[2].max) {
+  if (score >= range[2].min && score <= range[2].max) {
     return {
       feedback: 'not too bad!',
       color: 'light-pink',

@@ -69,11 +69,9 @@ class MemoryGame extends React.Component {
   }
 
   startTimer() {
-    const { count } = this.state;
-
     this.interval = setInterval(() => {
       this.setState({
-        count: count + 1,
+        count: this.state.count + 1,
       });
     }, 1000);
   }

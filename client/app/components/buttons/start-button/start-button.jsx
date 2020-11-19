@@ -1,5 +1,5 @@
 import React from 'react';
-import Text from '../text';
+import Text from '../../text';
 import styles from './start-button.scss';
 
 const StartButton = (props) => {

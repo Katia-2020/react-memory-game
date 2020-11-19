@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Column } from '../grid';
 import Card from '../card';
-import StartButton from '../start-button';
-import BackButton from '../back-button';
+import StartButton from '../buttons/start-button';
+import BackButton from '../buttons/back-button';
 import Result from '../result';
 import Score from '../score';
 import GameName from '../game-name';

@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames/bind';
-import Text from '../text';
+import Text from '../../text';
 import styles from './back-button.scss';
 
 const cx = classnames.bind(styles);

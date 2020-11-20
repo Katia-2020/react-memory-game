@@ -76,6 +76,66 @@ class MemoryGame extends React.Component {
     }, 1000);
   }
 
+  startGame(id, name) {
+    this.setState({
+      currentCard: {
+        id,
+        name,
+      },
+      gameStarted: true,
+      matchingCard: '',
+    });
+  }
+
+  openCardOne(id, name) {
+    this.setState({
+      currentCard: {
+        id,
+        name,
+      },
+      matchingCard: '',
+    });
+  }
+
+  openCardTwoNotMatched(id, name, currentCard, score) {
+    const updatedCurrentCard = {
+      id,
+      name,
+    };
+
+    const updatedPrevCard = {
+      id: currentCard.id,
+      name: currentCard.name,
+    };
+
+    this.setState({
+      currentCard: updatedCurrentCard,
+      previousCard: updatedPrevCard,
+      score: score + 1,
+      matchingCard: '',
+      blocked: true,
+    });
+
+    this.handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard);
+  }
+
+  openCardTwoMatchedFound(foundImages, name, matched, score) {
+    this.setState({
+      currentCard: {
+        id: '',
+        name: '',
+      },
+      previousCard: {
+        id: '',
+        name: '',
+      },
+      foundImages: [...foundImages, name],
+      matched: matched + 1,
+      score: score + 1,
+      matchingCard: name,
+    });
+  }
+
   handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard) {
     const isCurrentCardSet = (updatedCurrentCard && updatedCurrentCard.name);
     const isPrevCardSet = (updatedPrevCard && updatedPrevCard.name);
@@ -125,68 +185,23 @@ class MemoryGame extends React.Component {
 
     // start of the game: no cards are open, opening the first card
     if (!currentCard.name && !gameStarted && level) {
-      this.setState({
-        currentCard: {
-          id,
-          name,
-        },
-        gameStarted: true,
-        matchingCard: '',
-      });
-
+      this.startGame(id, name);
       this.startTimer();
     }
 
     // some matching cards are found and open, opening the first card of the pair
     if (!currentCard.name && gameStarted) {
-      this.setState({
-        currentCard: {
-          id,
-          name,
-        },
-        matchingCard: '',
-      });
+      this.openCardOne(id, name);
     }
 
     // opening the second card of the pair, cards are not matching
     if (name !== currentCard.name && currentCard.name && !previousCard.name) {
-      const updatedCurrentCard = {
-        id,
-        name,
-      };
-
-      const updatedPrevCard = {
-        id: currentCard.id,
-        name: currentCard.name,
-      };
-
-      this.setState({
-        currentCard: updatedCurrentCard,
-        previousCard: updatedPrevCard,
-        score: score + 1,
-        matchingCard: '',
-        blocked: true,
-      });
-
-      this.handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard);
+      this.openCardTwoNotMatched(id, name, currentCard, score);
     }
 
     // two cards open, matching card found
     if (name === currentCard.name && id !== currentCard.id && !alreadyFound) {
-      this.setState({
-        currentCard: {
-          id: '',
-          name: '',
-        },
-        previousCard: {
-          id: '',
-          name: '',
-        },
-        foundImages: [...foundImages, name],
-        matched: matched + 1,
-        score: score + 1,
-        matchingCard: name,
-      });
+      this.openCardTwoMatchedFound(foundImages, name, matched, score);
     }
   }
 

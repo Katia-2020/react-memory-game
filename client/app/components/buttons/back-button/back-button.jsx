@@ -12,7 +12,9 @@ const BackButton = ({ text, onClick, size }) => (
     })}
     onClick={onClick}
   >
-    <Text text={text} weight="bold" size={size} cases="uppercase" color="dark-blue" absolute />
+    <div className={styles['back-button__container']}>
+      <Text text={text} weight="bold" size={size} cases="uppercase" color="dark-blue" />
+    </div>
   </div>
 );
 

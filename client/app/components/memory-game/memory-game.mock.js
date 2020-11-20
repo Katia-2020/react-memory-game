@@ -94,5 +94,5 @@ export const getDeckBasedOnLevel = (level) => {
     return newArray;
   }
 
-  return newArr;
+  return newArray;
 };

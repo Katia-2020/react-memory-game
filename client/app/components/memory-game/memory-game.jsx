@@ -9,7 +9,7 @@ import GameName from '../game-name';
 import Banner from '../banner';
 import Timer from '../timer';
 import Levels from '../levels';
-import { imagesEasy, imagesMedium, imagesHard } from './memory-game.mock';
+import { getDeckBasedOnLevel } from './memory-game.mock';
 import { levels } from '../utilities/levels.utilities';
 import styles from './memory-game.scss';
 
@@ -250,14 +250,15 @@ class MemoryGame extends React.Component {
   }
 
   shuffleArray(level) {
-    let range = [];
+    // let range = [];
 
-    switch (level) {
-      case 'easy': range = imagesEasy; break;
-      case 'medium': range = imagesMedium; break;
-      default: range = imagesHard; break;
-    }
+    // switch (level) {
+    //   case 'easy': range = imagesEasy; break;
+    //   case 'medium': range = imagesMedium; break;
+    //   default: range = imagesHard; break;
+    // }
 
+    const range = getDeckBasedOnLevel(level);
     return range.sort(() => Math.random() - 0.5);
   }
 

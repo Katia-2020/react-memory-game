@@ -8,11 +8,8 @@ import { getScoresRange } from '../utilities/ranges.utilities';
 
 const cx = classnames.bind(styles);
 
-const Banner = (props) => {
-  const { score, maxMatched } = props;
-
+const Banner = ({ score, maxMatched }) => {
   const range = getScoresRange(maxMatched);
-
   const activeColor = getResults(score, range).color;
   const feedbackArray = getFeedbackArray(range);
 

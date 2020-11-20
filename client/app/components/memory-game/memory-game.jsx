@@ -250,14 +250,6 @@ class MemoryGame extends React.Component {
   }
 
   shuffleArray(level) {
-    // let range = [];
-
-    // switch (level) {
-    //   case 'easy': range = imagesEasy; break;
-    //   case 'medium': range = imagesMedium; break;
-    //   default: range = imagesHard; break;
-    // }
-
     const range = getDeckBasedOnLevel(level);
     return range.sort(() => Math.random() - 0.5);
   }

@@ -275,18 +275,16 @@ class MemoryGame extends React.Component {
     }
 
     return (
-      <Column key={item.id}>
-        <div className={styles['memory-game__item']}>
-          <Card
-            id={item.id}
-            name={item.name}
-            size={size}
-            onClick={this.handleClick}
-            content={this.getCardContent(item)}
-            active={matchingCard === item.name}
-          />
-        </div>
-      </Column>
+      <div className={styles['memory-game__item']}>
+        <Card
+          id={item.id}
+          name={item.name}
+          size={size}
+          onClick={this.handleClick}
+          content={this.getCardContent(item)}
+          active={matchingCard === item.name}
+        />
+      </div>
     );
   }
 
@@ -345,7 +343,11 @@ class MemoryGame extends React.Component {
 
     return (
       <Row>
-        {allImages.map(item => this.createCards(item))}
+        {allImages.map(item => (
+          <Column key={item.id}>
+            {this.createCards(item)}
+          </Column>
+        ))}
       </Row>
     );
   }

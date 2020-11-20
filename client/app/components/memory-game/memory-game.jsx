@@ -97,7 +97,9 @@ class MemoryGame extends React.Component {
     });
   }
 
-  openCardTwoNotMatched(id, name, currentCard, score) {
+  openCardTwoNotMatched(id, name) {
+    const { currentCard, score } = this.state;
+
     const updatedCurrentCard = {
       id,
       name,
@@ -119,7 +121,16 @@ class MemoryGame extends React.Component {
     this.handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard);
   }
 
-  openCardTwoMatchedFound(foundImages, name, matched, score) {
+  openCardTwoMatchedFound(name) {
+    const {
+      foundImages,
+      matched,
+      score,
+      allImages,
+    } = this.state;
+    const maxMatched = allImages.length / 2;
+    const foundArrLength = foundImages.length + 1;
+
     this.setState({
       currentCard: {
         id: '',
@@ -134,6 +145,10 @@ class MemoryGame extends React.Component {
       score: score + 1,
       matchingCard: name,
     });
+
+    if (maxMatched === foundArrLength) {
+      clearInterval(this.interval);
+    }
   }
 
   handleAutomaticCardFlip(updatedCurrentCard, updatedPrevCard) {
@@ -166,12 +181,11 @@ class MemoryGame extends React.Component {
     const {
       currentCard,
       previousCard,
-      foundImages,
-      matched,
-      score,
       blocked,
       gameStarted,
       level,
+      allImages,
+      foundImages,
     } = this.state;
 
     const alreadyFound = this.isFoundCard(name);
@@ -196,12 +210,12 @@ class MemoryGame extends React.Component {
 
     // opening the second card of the pair, cards are not matching
     if (name !== currentCard.name && currentCard.name && !previousCard.name) {
-      this.openCardTwoNotMatched(id, name, currentCard, score);
+      this.openCardTwoNotMatched(id, name);
     }
 
     // two cards open, matching card found
     if (name === currentCard.name && id !== currentCard.id && !alreadyFound) {
-      this.openCardTwoMatchedFound(foundImages, name, matched, score);
+      this.openCardTwoMatchedFound(name);
     }
   }
 
@@ -324,7 +338,6 @@ class MemoryGame extends React.Component {
     }
 
     if (gameEnd && allImages.length) {
-      clearInterval(this.interval);
       return (
         <Banner score={score} count={count} level={level} maxMatched={maxMatched} />
       );

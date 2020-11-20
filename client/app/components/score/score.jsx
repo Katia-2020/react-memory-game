@@ -4,7 +4,7 @@ import styles from './score.scss';
 import { getResults } from '../utilities/results.utilities';
 import { getScoresRange } from '../utilities/ranges.utilities';
 
-const Score = ({ score, maxMatched } ) => {
+const Score = ({ score, maxMatched }) => {
   const range = getScoresRange(maxMatched);
 
   return (

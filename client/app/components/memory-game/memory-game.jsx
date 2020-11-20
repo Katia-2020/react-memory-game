@@ -184,8 +184,6 @@ class MemoryGame extends React.Component {
       blocked,
       gameStarted,
       level,
-      allImages,
-      foundImages,
     } = this.state;
 
     const alreadyFound = this.isFoundCard(name);

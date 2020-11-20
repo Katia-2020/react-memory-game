@@ -9,12 +9,12 @@ const cx = classnames.bind(styles);
 
 const ResultsTable = ({ activeColor, range, feedbackArray }) => (
   <div className={styles['results-table']}>
-    {feedbackArray.map((item, index) => {
+    {feedbackArray.map((item) => {
       const itemColor = getResults(item.result, range).color;
       const active = activeColor === itemColor;
       return (
         <div
-          key={index}
+          key={item.id}
           className={cx('results-table__item', {
             [`results-table__item--${itemColor}`]: itemColor,
             'results-table__item--active': active,

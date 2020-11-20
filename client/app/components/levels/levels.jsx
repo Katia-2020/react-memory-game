@@ -4,11 +4,11 @@ import LevelButton from '../buttons/level-button';
 
 const Levels = ({ levels, onClick }) => (
   <div className={styles.levels}>
-    {levels.map((level, index) => (
+    {levels.map((item) => (
       <LevelButton
-        key={index}
+        key={item.id}
         onClick={onClick}
-        level={level}
+        level={item.level}
       />
     ))}
   </div>

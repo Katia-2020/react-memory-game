@@ -1,12 +1,9 @@
 import React from 'react';
 import { Row, Column } from '../grid';
 import GameControls from '../game-controls';
-// import GameBody from '../game-body';
 import Board from '../board';
-import Result from '../result';
-import Score from '../score';
+import GameResults from '../game-results';
 import Banner from '../banner';
-import Timer from '../timer';
 import Levels from '../levels';
 import { getDeckBasedOnLevel } from './memory-game.mock';
 import { isFoundCard } from '../utilities/board.utilities';
@@ -40,7 +37,7 @@ class MemoryGame extends React.Component {
 
     this.state = defaultState;
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleCardClick = this.handleCardClick.bind(this);
     this.handleLevelsClick = this.handleLevelsClick.bind(this);
     this.handleControlsClick = this.handleControlsClick.bind(this);
     this.startTimer = this.startTimer.bind(this);
@@ -181,7 +178,7 @@ class MemoryGame extends React.Component {
     }
   }
 
-  handleClick(name, id) {
+  handleCardClick(name, id) {
     const {
       currentCard,
       previousCard,
@@ -279,30 +276,12 @@ class MemoryGame extends React.Component {
         allImages={allImages}
         matchingCard={matchingCard}
         level={level}
-        onClick={this.handleClick}
+        onClick={this.handleCardClick}
         currentCard={currentCard}
         previousCard={previousCard}
         foundImages={foundImages}
       />
     );
-  }
-
-  createGameResults(maxMatched) {
-    const {
-      matched, matchingCard, score, count, level,
-    } = this.state;
-
-    if (level) {
-      return (
-        <div className={styles['memory-game__results']}>
-          <Result result={`${matched}/${maxMatched}`} active={matchingCard} />
-          <Score score={score} level={level} maxMatched={maxMatched} />
-          <Timer count={count} />
-        </div>
-      );
-    }
-
-    return '';
   }
 
   render() {
@@ -314,6 +293,8 @@ class MemoryGame extends React.Component {
       level,
       score,
       count,
+      matchingCard,
+      matched,
     } = this.state;
 
     const maxMatched = allImages.length / 2;
@@ -332,20 +313,19 @@ class MemoryGame extends React.Component {
             />
           </Column>
           <Column>
-            {/* <GameBody
-              gameStarted={gameStarted}
-              gameEnd={gameEnd}
-              allImages={allImages}
-              score={score}
-              count={count}
-              level={level}
-            /> */}
             <div className={styles['memory-game__body']}>
               {this.createGameBody(gameStarted, gameEnd, maxMatched)}
             </div>
           </Column>
           <Column>
-            {this.createGameResults(maxMatched)}
+            <GameResults
+              maxMatched={maxMatched}
+              matched={matched}
+              matchingCard={matchingCard}
+              score={score}
+              count={count}
+              level={level}
+            />
           </Column>
         </Row>
       </div>

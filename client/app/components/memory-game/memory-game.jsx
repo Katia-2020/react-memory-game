@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Column } from '../grid';
+import GameControls from '../game-controls';
 import Card from '../card';
 import StartButton from '../buttons/start-button';
 import BackButton from '../buttons/back-button';
@@ -24,6 +25,7 @@ const defaultState = {
     name: '',
   },
   gameStarted: false,
+  gameEnd: false,
   foundImages: [],
   matched: 0,
   score: 0,
@@ -40,9 +42,8 @@ class MemoryGame extends React.Component {
     this.state = defaultState;
 
     this.handleClick = this.handleClick.bind(this);
-    this.handleStartButtonClick = this.handleStartButtonClick.bind(this);
     this.handleLevelsClick = this.handleLevelsClick.bind(this);
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    this.handleControlsClick = this.handleControlsClick.bind(this);
     this.startTimer = this.startTimer.bind(this);
   }
 
@@ -148,6 +149,22 @@ class MemoryGame extends React.Component {
 
     if (maxMatched === foundArrLength) {
       clearInterval(this.interval);
+
+      this.setState({
+        currentCard: {
+          id: '',
+          name: '',
+        },
+        previousCard: {
+          id: '',
+          name: '',
+        },
+        foundImages: [...foundImages, name],
+        matched: matched + 1,
+        score: score + 1,
+        matchingCard: name,
+        gameEnd: true,
+      });
     }
   }
 
@@ -217,15 +234,26 @@ class MemoryGame extends React.Component {
     }
   }
 
-  handleStartButtonClick() {
+  handleControlsClick(type) {
     const { level } = this.state;
+    let newState = {};
     clearInterval(this.interval);
 
-    this.setState({
-      ...defaultState,
-      allImages: this.shuffleArray(level),
-      level,
-    });
+    if (type === 'start') {
+      newState = {
+        ...defaultState,
+        allImages: this.shuffleArray(level),
+        level,
+      };
+    }
+
+    if (type === 'back') {
+      newState = {
+        ...defaultState,
+      };
+    }
+
+    this.setState(newState);
   }
 
   handleLevelsClick(level) {
@@ -233,14 +261,6 @@ class MemoryGame extends React.Component {
       ...defaultState,
       allImages: this.shuffleArray(level),
       level,
-    });
-  }
-
-  handleBackButtonClick() {
-    clearInterval(this.interval);
-
-    this.setState({
-      ...defaultState,
     });
   }
 
@@ -276,42 +296,6 @@ class MemoryGame extends React.Component {
           active={matchingCard === item.name}
         />
       </div>
-    );
-  }
-
-  createGameControls(gameEnd, isNewGame) {
-    const { level, allImages } = this.state;
-
-    if (gameEnd && allImages.length) {
-      return (
-        <div className={styles['memory-game__controls']}>
-          <BackButton
-            text="new game"
-            size="large"
-            onClick={this.handleBackButtonClick}
-          />
-        </div>
-      );
-    }
-
-    if (!gameEnd && level) {
-      return (
-        <div className={styles['memory-game__controls']}>
-          <StartButton
-            text={isNewGame}
-            onClick={this.handleStartButtonClick}
-          />
-          <BackButton
-            text="go back"
-            size="medium"
-            onClick={this.handleBackButtonClick}
-          />
-        </div>
-      );
-    }
-
-    return (
-      <GameName />
     );
   }
 
@@ -362,22 +346,28 @@ class MemoryGame extends React.Component {
   }
 
   render() {
-    // console.log(this.state);
+    console.log(this.state);
     const {
       allImages,
-      foundImages,
       gameStarted,
+      level,
+      gameEnd,
     } = this.state;
 
     const maxMatched = allImages.length / 2;
-    const gameEnd = (maxMatched === foundImages.length);
     const isNewGame = !gameEnd ? 'start again' : 'start';
 
     return (
       <div className={styles['memory-game']}>
         <Row>
           <Column>
-            {this.createGameControls(gameEnd, isNewGame)}
+            <GameControls
+              gameEnd={gameEnd}
+              isNewGame={isNewGame}
+              level={level}
+              allImages={allImages}
+              onClick={this.handleControlsClick}
+            />
           </Column>
           <Column>
             <div className={styles['memory-game__body']}>

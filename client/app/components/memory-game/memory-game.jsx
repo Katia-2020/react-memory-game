@@ -1,16 +1,15 @@
 import React from 'react';
 import { Row, Column } from '../grid';
 import GameControls from '../game-controls';
-import Card from '../card';
-import StartButton from '../buttons/start-button';
-import BackButton from '../buttons/back-button';
+// import GameBody from '../game-body';
+import Board from '../board';
 import Result from '../result';
 import Score from '../score';
-import GameName from '../game-name';
 import Banner from '../banner';
 import Timer from '../timer';
 import Levels from '../levels';
 import { getDeckBasedOnLevel } from './memory-game.mock';
+import { isFoundCard } from '../utilities/board.utilities';
 import { levels } from '../utilities/levels.utilities';
 import styles from './memory-game.scss';
 
@@ -55,18 +54,6 @@ class MemoryGame extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.interval);
-  }
-
-  getCardContent(item) {
-    const { currentCard, previousCard } = this.state;
-
-    if ((currentCard.id === item.id ||
-      previousCard.id === item.id) ||
-      this.isFoundCard(item.name)) {
-      return item.url;
-    }
-
-    return '';
   }
 
   startTimer() {
@@ -201,9 +188,10 @@ class MemoryGame extends React.Component {
       blocked,
       gameStarted,
       level,
+      foundImages,
     } = this.state;
 
-    const alreadyFound = this.isFoundCard(name);
+    const alreadyFound = isFoundCard(name, foundImages);
 
     if (blocked ||
       (name === currentCard.name && id === currentCard.id) ||
@@ -264,44 +252,14 @@ class MemoryGame extends React.Component {
     });
   }
 
-  isFoundCard(name) {
-    const { foundImages } = this.state;
-    return foundImages.includes(name);
-  }
-
   shuffleArray(level) {
     const range = getDeckBasedOnLevel(level);
     return range.sort(() => Math.random() - 0.5);
   }
 
-  createCards(item) {
-    const { matchingCard, level } = this.state;
-
-    let size = '';
-
-    switch (level) {
-      case 'easy': size = 'big'; break;
-      case 'medium': size = 'medium'; break;
-      default: size = 'small'; break;
-    }
-
-    return (
-      <div className={styles['memory-game__item']}>
-        <Card
-          id={item.id}
-          name={item.name}
-          size={size}
-          onClick={this.handleClick}
-          content={this.getCardContent(item)}
-          active={matchingCard === item.name}
-        />
-      </div>
-    );
-  }
-
   createGameBody(gameStarted, gameEnd, maxMatched) {
     const {
-      allImages, score, count, level,
+      allImages, score, count, level, currentCard, previousCard, foundImages, matchingCard,
     } = this.state;
 
     if (!gameStarted && !level) {
@@ -317,13 +275,15 @@ class MemoryGame extends React.Component {
     }
 
     return (
-      <Row>
-        {allImages.map(item => (
-          <Column key={item.id}>
-            {this.createCards(item)}
-          </Column>
-        ))}
-      </Row>
+      <Board
+        allImages={allImages}
+        matchingCard={matchingCard}
+        level={level}
+        onClick={this.handleClick}
+        currentCard={currentCard}
+        previousCard={previousCard}
+        foundImages={foundImages}
+      />
     );
   }
 
@@ -349,9 +309,11 @@ class MemoryGame extends React.Component {
     console.log(this.state);
     const {
       allImages,
+      gameEnd,
       gameStarted,
       level,
-      gameEnd,
+      score,
+      count,
     } = this.state;
 
     const maxMatched = allImages.length / 2;
@@ -370,6 +332,14 @@ class MemoryGame extends React.Component {
             />
           </Column>
           <Column>
+            {/* <GameBody
+              gameStarted={gameStarted}
+              gameEnd={gameEnd}
+              allImages={allImages}
+              score={score}
+              count={count}
+              level={level}
+            /> */}
             <div className={styles['memory-game__body']}>
               {this.createGameBody(gameStarted, gameEnd, maxMatched)}
             </div>

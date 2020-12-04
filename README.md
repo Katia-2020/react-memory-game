@@ -6,7 +6,7 @@ The game consists of finding pairs of the same cards. It includes 3 levels of co
 React, JavaScript, TDD testing(Jest), Lifecycle events, SCSS and CSS modules, Webpack, Babel, Eslint, Stylelint.
 
 ### Demo:
-1.Choose the level
+1.Choose the level:
 
 ![memory-game-1](https://user-images.githubusercontent.com/66952678/100870619-d4829b00-3496-11eb-865c-e179106ab15e.gif)
 
